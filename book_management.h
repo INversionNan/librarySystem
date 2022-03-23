@@ -25,8 +25,31 @@ typedef struct _BookList {
 	 unsigned int length; // number of elements in the (Book*) List 
 }BookList;
 
-Book *Book_h;
 
+typedef struct user{
+    char user_acc[10];				//User account
+    char user_pass[15];				//User passwords
+    char user_num[10];				//User number
+    char user_name[20];				//User name
+    char user_tel[15];				//User telephone
+    char user_bor_book[10][20];		//User borrow
+    struct user *next;				//Next User
+}User;
+
+typedef struct librarian{
+    char lib_name[15];				//Librarian name
+    char lib_acc[10];				//Librarian account
+    char lib_pass[15];				//Librarian passwords
+    struct librarian *next;			//Next librarian
+}Librarian;
+
+//Book *Book_h;
+//User *User_h;
+//Librarian *Lib_h;
+//extern User *User_h;
+//extern Librarian *Lib_h;
+//
+//extern Book *Book_h;
 //saves the database of books in the specified file
 //returns 0 if books were stored correctly, or an error code otherwise
 int store_books(FILE *file);
@@ -62,5 +85,31 @@ BookList find_book_by_author (const char *author);
 //list is the NULL pointer.
 BookList find_book_by_year (unsigned int year);
 
+void welcome();
 
+void menu();
+
+void stu_choice();
+
+void li_choice();
+
+void reg();//register
+
+void login(); //login
+
+User * User_load(); // load user
+
+void user(); //Student
+
+void search(); //Search for books
+
+void display(); // Display all books
+
+void password_input(char *password);
+
+int check(char *password);
+
+Librarian *Lib_load();
+
+void lib();
 #endif

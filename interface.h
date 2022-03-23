@@ -4,9 +4,5 @@
 
 #ifndef LIBRARY_INTERFACE_H
 #define LIBRARY_INTERFACE_H
-void welcome();
 
-void menu();
-
-void li_choice();
 #endif //LIBRARY_INTERFACE_H
