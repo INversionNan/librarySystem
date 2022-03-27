@@ -3,5 +3,5 @@ project(library C)
 
 set(CMAKE_C_STANDARD 99)
 
-include_directories(book_management.h)
-add_executable(library book_management.c user.c interface.c librarian.c password.c)
+#include_directories(book_management.h)
+add_executable(library book_management.c book_management.h interface.c user.c librarian.c password.c save.c)

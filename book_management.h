@@ -1,5 +1,4 @@
-
-#ifndef BOOK_MANAGEMENT_GUARD__H 
+#ifndef BOOK_MANAGEMENT_GUARD__H
 #define BOOK_MANAGEMENT_GUARD__H
 
 #include <stdio.h>
@@ -11,24 +10,23 @@
 
 
 typedef struct _Book {
-	    unsigned int id; //Book ID
-		char *title; //book title
-		char *authors; //comma separated list of authors
-		unsigned int year; // year of publication
-		unsigned int copies; //number of copies the library has
-		char *type;
-		struct _Book *next; //pointer to the next book element
+    unsigned int id; //Book ID
+    char *title; //book title
+    char *authors; //comma separated list of authors
+    unsigned int year; // year of publication
+    unsigned int copies; //number of copies the library has
+    struct _Book *next; //pointer to the next book element
 }Book;
 
 typedef struct _BookList {
-	 Book* list; // pointer to a list of struct Book.
-	 unsigned int length; // number of elements in the (Book*) List 
+    Book* list; // pointer to a list of struct Book.
+    unsigned int length; // number of elements in the (Book*) List
 }BookList;
 
 
 typedef struct user{
-    char user_acc[10];				//User account
-    char user_pass[15];				//User passwords
+//    char user_acc[10];				//User account
+    char user_pass[25];				//User passwords
     char user_num[10];				//User number
     char user_name[20];				//User name
     char user_tel[15];				//User telephone
@@ -43,13 +41,11 @@ typedef struct librarian{
     struct librarian *next;			//Next librarian
 }Librarian;
 
-//Book *Book_h;
-//User *User_h;
-//Librarian *Lib_h;
+
 //extern User *User_h;
 //extern Librarian *Lib_h;
-//
 //extern Book *Book_h;
+
 //saves the database of books in the specified file
 //returns 0 if books were stored correctly, or an error code otherwise
 int store_books(FILE *file);
@@ -68,19 +64,19 @@ int add_book(Book book);
 int remove_book(Book book);
 
 //finds books with a given title.
-//returns a BookList structure, where the field "list" is a list of books, or null if no book with the 
+//returns a BookList structure, where the field "list" is a list of books, or null if no book with the
 //provided title can be found. The length of the list is also recorded in the returned structure, with 0 in case
 //list is the NULL pointer.
 BookList find_book_by_title (const char *title);
 
 //finds books with the given authors.
-//returns a Booklist structure, where the field "list" is a newly allocated list of books, or null if no book with the 
+//returns a Booklist structure, where the field "list" is a newly allocated list of books, or null if no book with the
 //provided title can be found. The length of the list is also recorded in the returned structure, with 0 in case
 //list is the NULL pointer.
 BookList find_book_by_author (const char *author);
 
 //finds books published in the given year.
-//returns a Booklist structure, where the field "list" is a list of books, or null if no book with the 
+//returns a Booklist structure, where the field "list" is a list of books, or null if no book with the
 //provided title can be found. The length of the list is also recorded in the returned structure, with 0 in case
 //list is the NULL pointer.
 BookList find_book_by_year (unsigned int year);
@@ -89,17 +85,29 @@ void welcome();
 
 void menu();
 
-void stu_choice();
+void user_choice();
 
 void li_choice();
+
+void add_choice();
+
+void goodbye();
 
 void reg();//register
 
 void login(); //login
 
-User * User_load(); // load user
+User *compare_name(char *login_name);
 
-void user(); //Student
+//void log_out();//logged out
+
+User *User_load(); // load user
+
+void user_save(); //Store the information in the student linked list in a file
+
+void book_save();//tore the information in the book linked list in a file
+
+void lib_save();//tore the information in the librarian linked list in a file
 
 void search(); //Search for books
 
@@ -109,7 +117,25 @@ void password_input(char *password);
 
 int check(char *password);
 
+int verify(char *password);
+
+Book *exist(int Book_id);
+
 Librarian *Lib_load();
 
-void lib();
+//void lib();
+
+void borrow(User *user_bo);
+
+void return_book();
+
+void Save();
+
+Book *repeated(char *a ,char *b, unsigned int c);
+
+Book *Book_h;
+User *User_h;
+Librarian *Lib_h;
+BookList *list;
+
 #endif
