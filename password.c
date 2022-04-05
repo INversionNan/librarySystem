@@ -54,7 +54,7 @@ int check(char *password){
             if(m!=3){
                 printf("The two passwords are inconsistent. Please re-enter the password for %d times:",3-m);
             } else if(m == 3){
-                printf("Your password is wrong!");
+                printf("\nYour password is wrong!\n");
             }
         }
     }
@@ -75,5 +75,5 @@ int verify(char *password){
             printf("Wrong password. Please re-enter the password for %d times ", 3-count);
         }
     }
-    return count;
-}
+    return verify_num;
+}//Verify the password input for librarian.

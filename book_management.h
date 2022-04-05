@@ -25,11 +25,9 @@ typedef struct _BookList {
 
 
 typedef struct user{
-//    char user_acc[10];				//User account
-    char user_pass[25];				//User passwords
+    char user_pass[20];				//User passwords
     char user_num[10];				//User number
     char user_name[20];				//User name
-    char user_tel[15];				//User telephone
     char user_bor_book[10][20];		//User borrow
     struct user *next;				//Next User
 }User;
@@ -91,7 +89,11 @@ void li_choice();
 
 void add_choice();
 
+void search_choice();
+
 void goodbye();
+
+User *repeat(char *a ,char *b);
 
 void reg();//register
 
@@ -127,9 +129,15 @@ Librarian *Lib_load();
 
 void borrow(User *user_bo);
 
-void return_book();
+void return_book(User *user_re);
 
 void Save();
+
+//void load_User();
+
+void display_borrow();
+
+int judge(User *user_bo, char *Book_borrow);
 
 Book *repeated(char *a ,char *b, unsigned int c);
 

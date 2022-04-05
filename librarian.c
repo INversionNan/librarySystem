@@ -34,30 +34,29 @@ int store_books(FILE *file) {
 //
 //        book_p = book_p->next;
 //    }
-    if(!book_p->next){
-        fprintf(file, "%d\t", book_p->id);
 //        book_p->title[strlen(book_p->title)] = '\t';
 //        fputs(book_p->title,file);
 //        book_p->authors[strlen(book_p->authors)] = '\t';
 //        fputs(book_p->authors,file);
-        fprintf(file,"%s\t",book_p->title);
-        fprintf(file,"%s\t",book_p->authors);
-        fprintf(file, "%d\t", book_p->year);
-        fprintf(file, "%d\t", book_p->copies);
-    }
+
     while (book_p->next){
-        fprintf(file, "%d\t", book_p->id);
+        fprintf(file, "%d ", book_p->id);
 //        book_p->title[strlen(book_p->title)] = '\t';
 //        fputs(book_p->title,file);
 //        book_p->authors[strlen(book_p->authors)] = '\t';
 //        fputs(book_p->authors,file);
-        fprintf(file,"%s\t",book_p->title);
-        fprintf(file,"%s\t",book_p->authors);
-        fprintf(file, "%d\t", book_p->year);
-        fprintf(file, "%d\t", book_p->copies);
+        fprintf(file,"%s ",book_p->title);
+        fprintf(file,"%s ",book_p->authors);
+        fprintf(file, "%d ", book_p->year);
+        fprintf(file, "%d\n", book_p->copies);
 
         book_p = book_p->next;
     }
+    fprintf(file, "%d ", book_p->id);
+    fprintf(file,"%s ",book_p->title);
+    fprintf(file,"%s ",book_p->authors);
+    fprintf(file, "%d ", book_p->year);
+    fprintf(file, "%d", book_p->copies);
     fclose(file);
     return 0;
 //    while (1) {
@@ -109,7 +108,11 @@ int load_books(FILE *file){
     Book *t = k;
     Book *a;
     char *num;
-    if((file = fopen("books.txt","w+")) == NULL){
+    if(file == NULL){
+        printf("Failed to open books file.\n");
+        return -1;
+    }
+    if((file = fopen("books.txt","r")) == NULL){
         printf("Failed to open the file");
         exit(1);
     }
@@ -121,12 +124,15 @@ int load_books(FILE *file){
     }
     rewind(file);
     while(!feof(file)){
-
-        fscanf(file,"%d",a->id);
+        a=(Book *)malloc(sizeof(Book));
+        a->next=NULL;
+        a->title = (char *)malloc(sizeof (a->title));
+        a->authors = (char *)malloc(sizeof (a->authors));
+        fscanf(file,"%d",&a->id);
         fscanf(file,"%s",a->title);
         fscanf(file,"%s",a->authors);
-        fscanf(file,"%d",a->year);
-        fscanf(file,"%d",a->copies);
+        fscanf(file,"%d",&a->year);
+        fscanf(file,"%d",&a->copies);
 
 //        a = (Book *)malloc(sizeof(Book));
 //        a->next = NULL;
@@ -139,7 +145,7 @@ int load_books(FILE *file){
 //        num[strlen(num)-1] = '\0';
 //        strcpy(a->title,num);
 //
-//        fgets(num,50,file);
+//        fgets(num,50,file);0000000.
 //        num[strlen(num)-1] = '\0';
 //        strcpy(a->authors,num);
 //
@@ -179,24 +185,38 @@ int add_book(Book book){
     FILE  *file = fopen("books.txt","w+");
     char addb = '1';
     char *t, *p;
-    Book *book_p3;
     p = (char *) malloc(300 * sizeof (char ));
     t = (char *) malloc(300 * sizeof (char ));
-    Book *add = (Book *) malloc(sizeof (Book));
-    add->next = NULL;
-    Book *add_1 = (Book *) malloc(sizeof (Book));
-    add->next = NULL;
 //    add->next = NULL;
 //    add_1->next = NULL;
 //    book.next = NUll;
 
-    while(addb != '0'){
-        add_choice();
-        printf("\nOption:");
-        scanf("%c", &addb);
-        while (getchar()!='\n');
+    while(addb != '3'){
+        Book *book_p3, *book_p4;
+        book_p3 = Book_h;
+        Book *add = (Book *) malloc(sizeof (Book));
+        add->title = (char *) malloc(sizeof (add->title));
+        add->authors = (char *)malloc(sizeof (add->authors));
+        add->next = NULL;
+        Book *add_1 = (Book *) malloc(sizeof (Book));
+        add_1->title = (char *) malloc(sizeof (add->title));
+        add_1->authors = (char *)malloc(sizeof (add->authors));
+        add_1->next = NULL;
+        while (1){
+            add_choice();
+            printf("\nOption:");
+            int count_3 = 0;
+            scanf("%c",&addb);
+            while(getchar()!='\n') count_3 ++;
+            if(count_3 > 0){
+                printf("Sorry, the option you enter was invalid, please try again.\n");
+                continue;
+            }else{
+                break;
+            }
+        }
         switch (addb) {
-            case'1':
+            case '1':
                 printf("\nEnter the title of the book you wish to add:\n");
                 fflush(stdin);
                 gets(t);
@@ -232,12 +252,13 @@ int add_book(Book book){
                 fflush(stdin);
                 gets(t);
                 book.copies = atoi(t);
-
+//                printf("1111111111\n");
+//                strcpy(add->title,book.title);
+//                strcpy(add->authors,book.authors);
                 add->title = book.title;
                 add->authors = book.authors;
                 add->year = book.year;
                 add->copies = book.copies;
-
 //                unsigned int id = 0;
 //                Book *book_p2 = Book_h->next;
 //                while(1){
@@ -264,15 +285,27 @@ int add_book(Book book){
 //                    id = book_p2->id;
 //                    book_p2 = book_p2->next;
 //                }
-                book_p3 = Book_h;
-                while (book_p3->next){
-                    book_p3->id += 1;
+//                while (book_p3->next){
+//                    add->id ++;
+//                    book_p3 = book_p3->next;
+//                }
+//                printf("%d\n",add->id);
+//                book_p3->next = add;
+//                book_p3 = add;
+//                printf("%d\n",book_p3->next->id);
+                add->id += 1;
+                while (1){
+                    if(book_p3->next == NULL){
+                        add->next = NULL;
+                        book_p3->next = add;
+                        break;
+                    }
+                    add->id = book_p3->next->id;
+                    add->id++;
                     book_p3 = book_p3->next;
                 }
-                add->id = book_p3->id;
-                book_p3->next = add;
                 book_save();
-               //store_books(file);
+                //store_books(file);
                 break;
             case '2':
                 printf("\nEnter the title of the book you wish to add:\n");
@@ -289,7 +322,7 @@ int add_book(Book book){
 
                 printf("Enter the year of the book you wish to add:\n");
                 fflush(stdin);
-                gets(t);
+                gets(p);
                 book.year = atoi(p);
 
 //                scanf("%d",&add->year);
@@ -303,26 +336,28 @@ int add_book(Book book){
                     break;
                 }
 
-                add_1->title = book.title;
-                add_1->authors = book.authors;
-                add_1->year = book.year;
-
                 printf("Enter the copies of the book you wish to add:\n");
 //                scanf("%d",&add->copies);
 //                getchar();
 //                book.copies = add->copies;
                 fflush(stdin);
-                gets(t);
+                gets(p);
                 book.copies = atoi(p);
+
+                strcpy(add_1->title,book.title);
+                strcpy(add_1->authors,book.authors);
+//                add_1->title = book.title;
+//                add_1->authors = book.authors;
+                add_1->year = book.year;
                 add_1->copies = book.copies;
 
-                while (add_1->next){
-                    add = add_1->next;
-                }
-                add_1->next = add_1;
+//                while (add_1->next){
+//                    add = add_1->next;
+//                }
+//                add_1->next = add_1;
 
-                Book *book_p3 = repeated(book.authors,book.title,book.year);
-                book_p3->copies += book.copies;
+                book_p4 = repeated(book.authors,book.title,book.year);
+                book_p4->copies += book.copies;
                 store_books(file);
                 break;
 
@@ -331,15 +366,46 @@ int add_book(Book book){
                 printf("Sorry, the option you enter was invalid, please try again.\n");
                 break;
         }
-        if(addb == '3'){
-            break;
-        }
     }
     return 1;
 }
 
 int remove_book(Book book){
+    int i;
+    Book *book_remove = Book_h;
+    Book *p = Book_h->next;
+    User *user_borrow = User_h;
+    if(book.id == 0){
+        printf("\nThe book was not found in the library.\n");
+        return -2;
+    }
+    while(user_borrow){
+        for (i = 0; i < 10; ++i) {
+            printf("%d\n",user_borrow->user_num[i]);
+            if(user_borrow->user_num[i] == book.id){
+                printf("\nYou can not remove this book, because some student has borrowed the book.\n");
+                return -2;
+            }
+        }
+        user_borrow = user_borrow ->next;
+    }
 
+    while (1){
+        if(book_remove == NULL || p == NULL){
+            printf("\nThe book was not found in the library.\n");
+            return -2;
+        }
+        if(book_remove->id == book.id-1) {
+            book_remove->next = p->next;
+            free(p);
+            break;
+        }
+        book_remove = book_remove->next;
+        p = book_remove->next;
+    }
+    printf("\nYou have deleted this book successfully!\n");
+    book_save();
+    return 0;
 }
 
 Librarian *Lib_load(){
@@ -349,7 +415,7 @@ Librarian *Lib_load(){
     Librarian *p_lib;
     int i;
     if((file = fopen("librarian.txt","r"))==NULL){
-        printf("Failed to open librarian file.\n");
+        file = fopen("librarian.txt","w+");
         exit(1);
     }
     getc(file);

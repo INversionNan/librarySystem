@@ -49,7 +49,16 @@ void add_choice(){
     printf("3)Quit\n");
 }
 
+void search_choice(){
+    printf("Please choose an option:\n\n");
+    printf("1)Find books by title\n");
+    printf("2)Find books by authors\n");
+    printf("3)Find books by year\n");
+    printf("4)Quit\n");
+    printf("Option:");
+}
 void goodbye(){
     printf("\nThank you for using the library!\n");
     printf("Goodbye~\n");
 }
+

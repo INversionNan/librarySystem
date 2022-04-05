@@ -6,8 +6,7 @@ Book *Book_load(){
     FILE *file;
     Book *h=NULL,*t=h,*p;
     if((file=fopen("books.txt","r"))==NULL){
-        printf("Failed to open books file.\n");
-        exit(1);
+        file = fopen("books.txt","w+");
     }
     getc(file);
     if(feof(file)){
@@ -15,17 +14,20 @@ Book *Book_load(){
         return NULL;
     }
     rewind(file);
-    char *num;
-    num = (char *) malloc(300 * sizeof (char));
+//    char *num;
+//    num = (char *) malloc(300 * sizeof (char));
     while(!feof(file)){
         p=(Book *)malloc(sizeof(Book));
         p->next=NULL;
-
-        fscanf(file,"%d",p->id);
+        p->title = (char *)malloc(sizeof (p->title));
+        p->authors = (char *)malloc(sizeof (p->authors));
+        fscanf(file,"%d",&p->id);
         fscanf(file,"%s",p->title);
         fscanf(file,"%s",p->authors);
-        fscanf(file,"%d",p->year);
-        fscanf(file,"%d",p->copies);
+//        printf("%s\n",p->title);
+//        printf("%s\n",p->authors);
+        fscanf(file,"%d",&p->year);
+        fscanf(file,"%d",&p->copies);
 //
 //        fgets(num,50,file);
 //        num[strlen(num)-1] = '\0';
@@ -48,8 +50,6 @@ Book *Book_load(){
 //        fgets(num,50,file);
 //        num[strlen(num)-1] = '\0';
 //        p->copies = atoi(num);
-
-
         if(h==NULL){
             h = p;
         }else{
@@ -66,38 +66,53 @@ int main() {
     User_h = (User *) malloc(sizeof (User));
     Lib_h = (Librarian *) malloc(sizeof (Librarian));
 
-    FILE *file = fopen("books.txt","r");
-//    store_books(file);
-    load_books(file);
-    fclose(file);
-
-    FILE *user = fopen("user.txt","w+");
-    fclose(user);
-
-    char lib_n[10] = "librarian";
-    char lib_password[10] = "librarian";
-    char lib_a[10] = "0";
-
-    FILE *lib = fopen("librarian.txt","w+");
-    fprintf(file,"%s\t", lib_n);
-    fprintf(file,"%s\t", lib_password);
-    fprintf(file,"%s\t", lib_a);
-    fclose(lib);
-
-
     Book_h ->next = Book_load();
     User_h->next = User_load();
     Lib_h->next = Lib_load();
+
+//    while(1){
+//        printf("%s\n",User_h->user_name);
+//        printf("%s\n",User_h->user_pass);
+//        User_h = User_h->next;
+//        if(!User_h){
+//
+//            break;
+//        }
+//    }
+//    file = fopen("books.txt","w+");
+//    store_books(file);
+//    load_books(file);
+//    fclose(file);
+
+
+
+//    char lib_n[10] = "librarian";
+//    char lib_password[10] = "librarian";
+//    char lib_a[10] = "0";
 //
 
+//    fprintf(lib,"%s\t", lib_n);
+//    fprintf(lib,"%s\t", lib_password);
+//    fprintf(lib,"%s\t", lib_a);
+//    fclose(lib);
 
+//
     char a = '1';
     welcome();
-    while(a != 0){
-        menu();
-        printf("Option:");
-        scanf("%c",&a);
-        while(getchar()!='\n');
+    while(a != '5'){
+        while (1){
+            menu();
+            printf("Option:");
+            int count = 0;
+            scanf("%c",&a);
+            while(getchar()!='\n') count ++;
+            if(count > 0){
+                printf("Sorry, the option you enter was invalid, please try again.\n\n");
+                continue;
+            }else{
+                break;
+            }
+        }
         switch (a) {
             case '1':reg(); break;
             case '2':login(); break;
@@ -106,10 +121,11 @@ int main() {
             case '5':Save();break;
             default:
                 printf("Sorry, the option you enter was invalid, please try again.\n");
+                break;
         }
     }
-    FILE *fp = fopen("books.txt","w+");
-    store_books(fp);
+    FILE *fp = fopen("books.txt","r");
+    load_books(fp);
     fclose(fp);
     return 0;
 }
