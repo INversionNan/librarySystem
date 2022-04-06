@@ -6,7 +6,7 @@
 #include "book_management.h"
 
 void user_save(){
-    int i;
+    int i,j;
     FILE *file;
     User *user_p = User_h->next;
 
@@ -27,6 +27,9 @@ void user_save(){
 //        fprintf(file,"%s",p->user_name);
 //        fprintf(file,"%s",p->user_num);
 //        fprintf(file,"%s",p->user_pass);
+        for(j = 0; j < 9 ;j++){
+            fprintf(file,"%d ",user_p->user_bor[j]);
+        }
         for(i = 0; i < 9; i++){
             fprintf(file,"%s ",user_p->user_bor_book[i]);
 //            fprintf(file,"%s",p->user_bor_book[i]);
@@ -44,9 +47,12 @@ void user_save(){
 //    fputs(user_p->user_name,file);
 //    fputs(user_p->user_num,file);
 //    fputs(user_p->user_pass,file);
-    int k;
+    int k,l;
+    for(l = 0; l < 9; l++){
+        fprintf(file,"%d ",user_p->user_bor[l]);
+    }
     for (k = 0; k < 9; k++) {
-        fprintf(file,"%s ",user_p->user_bor_book[i]);
+        fprintf(file,"%s ",user_p->user_bor_book[k]);
     }
     fprintf(file,"%s",user_p->user_bor_book[9]);
 //    user_p->next = NULL;
@@ -63,32 +69,6 @@ void book_save(){
         printf("Failed to open books file.\n");
         exit(1);
     }
-//    if(!book_p->next){
-//        fprintf(file, "%d\n", book_p->id);
-//        book_p->title[strlen(book_p->title)] = '\n';
-//        fputs(book_p->title,file);
-//        book_p->authors[strlen(book_p->authors)] = '\n';
-//        fputs(book_p->authors,file);
-//        fprintf(file, "%d\n", book_p->year);
-//        fprintf(file, "%d\n", book_p->copies);
-//    }
-//    while (book_p->next){
-//        fprintf(file, "%d\n", book_p->id);
-//        book_p->title[strlen(book_p->title)] = '\n';
-//        fputs(book_p->title,file);
-//        book_p->authors[strlen(book_p->authors)] = '\n';
-//        fputs(book_p->authors,file);
-//        fprintf(file, "%d\n", book_p->year);
-//        fprintf(file, "%d\n", book_p->copies);
-//
-//        book_p = book_p->next;
-//    }
-
-//        book_p->title[strlen(book_p->title)] = '\t';
-//        fputs(book_p->title,file);
-//        book_p->authors[strlen(book_p->authors)] = '\t';
-//        fputs(book_p->authors,file);
-
     while (book_p->next){
         fprintf(file, "%d ", book_p->id);
 //        book_p->title[strlen(book_p->title)] = '\t';
@@ -108,43 +88,6 @@ void book_save(){
     fprintf(file, "%d ", book_p->year);
     fprintf(file, "%d", book_p->copies);
     fclose(file);
-//    while ( book_p ->next){
-//        fprintf(file,"%d\t",book_p->id);
-//
-//        int l_1 = strlen(book_p->title);
-//        fwrite(&l_1,sizeof (int),1,file);
-//        fputs(book_p->title,file);
-//
-//        int l_2 = strlen(book_p->authors);
-//        fwrite(&l_2,sizeof (int),1,file);
-//        fputs(book_p->authors,file);
-//
-//        fprintf(file,"%d\t",book_p->year);
-//        fprintf(file,"%d\t",book_p->copies);
-//
-//        int l_3 = strlen(book_p->type);
-//        fwrite(&l_3,sizeof (int),1,file);
-//        fputs(book_p->type,file);
-//
-//        book_p = book_p->next;
-//    }
-//    fprintf(file,"%d\t",book_p->id);
-//
-//    int l_4 = strlen(book_p->title);
-//    fwrite(&l_4,sizeof (int),1,file);
-//    fputs(book_p->title,file);
-//
-//    int l_5 = strlen(book_p->authors);
-//    fwrite(&l_5,sizeof (int),1,file);
-//    fputs(book_p->authors,file);
-//
-//    fprintf(file,"%d\t",book_p->year);
-//    fprintf(file,"%d\t",book_p->copies);
-//
-//    int l_6 = strlen(book_p->type);
-//    fwrite(&l_6,sizeof (int),1,file);
-//    fputs(book_p->type,file);
-//    fclose(file);
 }
 
 void lib_save(){

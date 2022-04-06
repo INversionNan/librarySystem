@@ -28,7 +28,8 @@ typedef struct user{
     char user_pass[20];				//User passwords
     char user_num[10];				//User number
     char user_name[20];				//User name
-    char user_bor_book[10][20];		//User borrow
+    int user_bor[10];               //User borrow ID
+    char user_bor_book[10][20];		//User borrow title
     struct user *next;				//Next User
 }User;
 
@@ -91,6 +92,8 @@ void add_choice();
 
 void search_choice();
 
+void borrow_choice();
+
 void goodbye();
 
 User *repeat(char *a ,char *b);
@@ -123,6 +126,8 @@ int verify(char *password);
 
 Book *exist(int Book_id);
 
+Book *exist_title(char *Book_title, char *Book_author);
+
 Librarian *Lib_load();
 
 //void lib();
@@ -139,9 +144,12 @@ void display_borrow();
 
 int judge(User *user_bo, char *Book_borrow);
 
+int judge_Id(User *user_bo, int Book_borrowId);
+
 Book *repeated(char *a ,char *b, unsigned int c);
 
 Book *Book_h;
+Book *Book_bor;
 User *User_h;
 Librarian *Lib_h;
 BookList *list;

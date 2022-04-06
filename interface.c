@@ -49,6 +49,14 @@ void add_choice(){
     printf("3)Quit\n");
 }
 
+void borrow_choice(){
+    printf("\nPlease choose an option\n\n");
+    printf("1)Borrow a book by ID\n");
+    printf("2)Borrow a book by Title and Authors\n");
+    printf("3)Quit\n");
+    printf("Option:");
+}
+
 void search_choice(){
     printf("Please choose an option:\n\n");
     printf("1)Find books by title\n");

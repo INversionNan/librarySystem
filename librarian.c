@@ -8,9 +8,9 @@ int store_books(FILE *file) {
 //    char g;
 //    char e[100];
     Book *book_p;
-    if(file == NULL){
+    if((file = fopen("books.txt","w+")) == NULL){
         printf("Failed to open books file.\n");
-        return -1;
+        exit(1);
     }
     book_p = Book_h;
     book_p = book_p->next;
@@ -49,7 +49,6 @@ int store_books(FILE *file) {
         fprintf(file,"%s ",book_p->authors);
         fprintf(file, "%d ", book_p->year);
         fprintf(file, "%d\n", book_p->copies);
-
         book_p = book_p->next;
     }
     fprintf(file, "%d ", book_p->id);
@@ -133,30 +132,6 @@ int load_books(FILE *file){
         fscanf(file,"%s",a->authors);
         fscanf(file,"%d",&a->year);
         fscanf(file,"%d",&a->copies);
-
-//        a = (Book *)malloc(sizeof(Book));
-//        a->next = NULL;
-//
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        a->id = atoi(num);
-//
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        strcpy(a->title,num);
-//
-//        fgets(num,50,file);0000000.
-//        num[strlen(num)-1] = '\0';
-//        strcpy(a->authors,num);
-//
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        a->year = atoi(num);
-//
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        a->copies = atoi(num);
-
         if(k == NULL){
             k = a;
         } else{
@@ -253,47 +228,13 @@ int add_book(Book book){
                 gets(t);
                 book.copies = atoi(t);
 //                printf("1111111111\n");
-//                strcpy(add->title,book.title);
-//                strcpy(add->authors,book.authors);
-                add->title = book.title;
-                add->authors = book.authors;
+                strcpy(add->title,book.title);
+                strcpy(add->authors,book.authors);
+//                add->title = book.title;
+//                add->authors = book.authors;
                 add->year = book.year;
                 add->copies = book.copies;
-//                unsigned int id = 0;
-//                Book *book_p2 = Book_h->next;
-//                while(1){
-//                    if(book_p2 == NULL){
-//                        book_p2->id = id +1;
-//                        book_p2->next = NULL;
-//                        break;
-//                    }
-//                    id = book_p2->id;
-//                    book_p2 = book_p2->next;
-//                }
-//                while(1){
-//                    if(book_p2 == NULL){
-//                        book_p2 = (Book *) malloc(sizeof (Book));
-//                        book_p2->id = id + 1;
-//                        book_p2->title = book.title;
-//                        book_p2->authors = book.authors;
-//                        book_p2->year = book.year;
-//                        book_p2->copies = book.copies;
-//                        book_p2->type = book.type;
-//                        book_p2->next = NULL;
-//                        break;
-//                    }
-//                    id = book_p2->id;
-//                    book_p2 = book_p2->next;
-//                }
-//                while (book_p3->next){
-//                    add->id ++;
-//                    book_p3 = book_p3->next;
-//                }
-//                printf("%d\n",add->id);
-//                book_p3->next = add;
-//                book_p3 = add;
-//                printf("%d\n",book_p3->next->id);
-                add->id += 1;
+                add->id = book.id + 1;
                 while (1){
                     if(book_p3->next == NULL){
                         add->next = NULL;
@@ -381,8 +322,7 @@ int remove_book(Book book){
     }
     while(user_borrow){
         for (i = 0; i < 10; ++i) {
-            printf("%d\n",user_borrow->user_num[i]);
-            if(user_borrow->user_num[i] == book.id){
+            if(user_borrow->user_bor[i] == book.id){
                 printf("\nYou can not remove this book, because some student has borrowed the book.\n");
                 return -2;
             }

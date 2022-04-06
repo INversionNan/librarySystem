@@ -1,6 +1,0 @@
-#ifndef LIBRARY_PASSWORD_H
-#define LIBRARY_PASSWORD_H
-
-
-
-#endif //LIBRARY_PASSWORD_H
