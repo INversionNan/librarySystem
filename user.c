@@ -4,11 +4,11 @@
 
 #include <string.h>
 
-User *repeat(char *a ,char *b){
+User *repeat(char *a,char *b){
 
     User *user_p1 = User_h->next;
     while (user_p1){
-        if(strcmp(a, user_p1->user_name)==0 && strcmp(b, user_p1->user_num)==0){
+        if(strcmp(a, user_p1->user_name)==0 || strcmp(b, user_p1->user_num)==0){
             return user_p1;
         }
         user_p1 = user_p1->next;
@@ -164,7 +164,7 @@ void login(){
                     case '3':search();break;
                     case '4':display();break;
                     case '5':
-                        printf("\nLogging out...\n\n");
+                        printf("\nLogging out...\n");
                         return;
                     default:
                         printf("Wrong input, please re-enter again.\n");break;
@@ -173,7 +173,7 @@ void login(){
         }
         else{
             printf("Please enter your password:");
-            if(check(login_user->user_pass) == 0){
+            if(verify(login_user->user_pass) == 0){
                 printf("You have entered three errors in a row and will exit the program.\n\n");
                 return;
             }
@@ -199,7 +199,7 @@ void login(){
                     case '3':search();break;
                     case '4':display();break;
                     case '5':
-                        printf("\nLogging out...\n\n");
+                        printf("\nLogging out...\n");
                         return;
                     default:
                         printf("Wrong input, please re-enter again.\n");break;
@@ -212,7 +212,7 @@ void login(){
 User *User_load(){
     FILE *file;
     User *h=NULL,*t = h,*p_stu;
-    int i;
+    int i ,j;
     if((file = fopen("user.txt","r"))==NULL){
         file = fopen("user.txt","w+");
     }
@@ -226,13 +226,10 @@ User *User_load(){
         p_stu = (User *) malloc(sizeof (User));
         p_stu->next = NULL;
         fscanf(file, "%s", p_stu->user_name);
-//        printf("%s\n",p_stu->user_name);
         fscanf(file, "%s", p_stu->user_num);
-//        printf("%s\n",p_stu->user_num);
         fscanf(file, "%s", p_stu->user_pass);
-//        printf("%s\n",p_stu->user_pass);
-        for(i = 0; i < 10 ; ++i){
-            fscanf(file, "%d", &p_stu->user_bor[i]);
+        for(j = 0; j < 10 ; ++j){
+            fscanf(file, "%d", &p_stu->user_bor[j]);
         }
         for (i = 0; i < 10; ++i) {
             fscanf(file, "%s", p_stu->user_bor_book[i]);
@@ -252,19 +249,39 @@ User *User_load(){
 
 void display(){
     Book *p2 = Book_h->next;
+    int a, len, ID_len = 2, title_len = 5, authors_len = 5;
     if(!p2){
-        printf("\nThere are no books in the library at present.\n\n");
+        printf("\nThere are no books in the library at present.\n");
         return;
     }
+    Book *p3 = Book_h->next;
+    while(p3){
+        len = 0;
+        a = p3->id;
+        while (a > 0){
+            a /= 10;
+            len++;
+        }
+        if(len > ID_len){
+            ID_len = len;
+        }
+        if(strlen(p3->title) > title_len){
+            title_len = strlen(p3->title);
+        }
+        if(strlen(p3->authors) > authors_len){
+            authors_len = strlen(p3->authors);
+        }
+        p3 = p3->next;
+    }
     Book *p1 = Book_h->next;
-    printf("%s\t","ID");
-    printf("%s\t","Title");
-    printf("%s\t","Authors");
+    printf("%-*s\t",ID_len,"ID");
+    printf("%-*s\t",title_len,"Title");
+    printf("%-*s\t",authors_len,"Authors");
     printf("%s\t","Year");
     printf("%s\t","Copies");
     printf("\n");
     while(p1 != NULL){
-        printf("%d\t %s\t %s\t %d\t %d\n",p1->id, p1->title, p1->authors, p1->year, p1->copies);
+        printf("%-*d\t %-*s\t %-*s\t %d\t %d\n",ID_len,p1->id, title_len,p1->title,authors_len, p1->authors, p1->year, p1->copies);
         p1 = p1->next;
     }
 }
@@ -281,6 +298,17 @@ int judge(User *user_bo, char *Book_borrow){
     return judge_count;
 }
 
+int find_title(char *title,char *author){
+    int id_num;
+    Book *book_find = Book_h->next;
+    while (book_find){
+        if(strcmp(title,book_find->title) == 0 && strcmp(author,book_find->authors) == 0){
+            id_num = book_find->id;
+        }
+        book_find = book_find->next;
+    }
+    return id_num;
+}
 int judge_Id(User *user_bo, int Book_borrowId){
     int judge_count = 0;
     int i;
@@ -373,7 +401,6 @@ void borrow(User *user_bo){
                 printf("Please enter the title of the book you want to borrow:\n");
                 fflush(stdin);
                 gets(borrow_title);
-
                 printf("Please enter the authors of the book you want to borrow:\n");
                 fflush(stdin);
                 gets(borrow_author);
@@ -390,20 +417,32 @@ void borrow(User *user_bo){
                     free(borrow_title);
                     return;
                 }
-                char *borrow_at = strcat(borrow_title,borrow_author);
-                if(judge(user_bo,borrow_at)){
+                int id_num = find_title(borrow_title,borrow_author);
+                strcat(borrow_title,borrow_author);
+                int n;
+                for(n = 0; n < strlen(borrow_title);n++){
+                    if(borrow_title[n] == ' '){
+                        borrow_title[n] = '_';
+                    }
+                }
+                if(judge(user_bo,borrow_title) || judge_Id(user_bo,id_num)){
                     printf("Sorry, you have borrowed it before.\n");
                     printf("Do not borrow it again.\n");
                     printf("You failed to borrow it.\n\n");
                     free(borrow_title);
                     return;
                 }
+                int j;
                 for(i = 0; i < 10; i++){
                     if(strcmp(user_bo->user_bor_book[i],"0") == 0){
                         user_bo->user_bor_book[i][0] = '\0';
                         strcat(user_bo->user_bor_book[i],borrow_title);
-                        printf("%d\n",borrow->id);
-                        user_bo->user_bor[i] = borrow->id;
+                        for(j = i ; j < 10; j++){
+                            if(user_bo->user_bor[j] == 0){
+                                user_bo->user_bor[j] = borrow->id;
+                                break;
+                            }
+                        }
                         borrow->copies--;
                         break;
                     }
@@ -424,17 +463,41 @@ void borrow(User *user_bo){
 
 void display_borrow(User *user_re){
     int i;
+    int a, len, ID_len = 2, title_len = 5, authors_len = 5;
+    Book *p4 = Book_h->next;
+    while (p4){
+        for(i = 0 ; i < 10 ;i ++){
+            if(user_re->user_bor[i] == p4->id){
+                len = 0;
+                a = p4->id;
+                while (a > 0){
+                    a /= 10;
+                    len++;
+                }
+                if(len > ID_len){
+                    ID_len = len;
+                }
+                if(strlen(p4->title) > title_len){
+                    title_len = strlen(p4->title);
+                }
+                if(strlen(p4->authors) > authors_len){
+                    authors_len = strlen(p4->authors);
+                }
+            }
+        }
+        p4 = p4->next;
+    }
     Book *p3 = Book_h->next;
-    printf("%s\t","ID");
-    printf("%s\t","Title");
-    printf("%s\t","Authors");
+    printf("%-*s\t",ID_len,"ID");
+    printf("%-*s\t",title_len,"Title");
+    printf("%-*s\t",authors_len,"Authors");
     printf("%s\t","Year");
     printf("%s\t","Copies");
     printf("\n");
     while (p3 != NULL){
         for(i = 0; i < 10; i++){
             if(user_re->user_bor[i] == p3->id){
-                printf("%d\t %s\t %s\t %d\t %d\n",p3->id, p3->title, p3->authors, p3->year, p3->copies);
+                printf("%-*d\t %-*s\t %-*s\t %d\t %d\n",ID_len,p3->id, title_len,p3->title, authors_len,p3->authors, p3->year, p3->copies);
             }
         }
         p3 = p3->next;

@@ -27,7 +27,7 @@ void user_save(){
 //        fprintf(file,"%s",p->user_name);
 //        fprintf(file,"%s",p->user_num);
 //        fprintf(file,"%s",p->user_pass);
-        for(j = 0; j < 9 ;j++){
+        for(j = 0; j < 10 ;j++){
             fprintf(file,"%d ",user_p->user_bor[j]);
         }
         for(i = 0; i < 9; i++){
@@ -48,7 +48,7 @@ void user_save(){
 //    fputs(user_p->user_num,file);
 //    fputs(user_p->user_pass,file);
     int k,l;
-    for(l = 0; l < 9; l++){
+    for(l = 0; l < 10; l++){
         fprintf(file,"%d ",user_p->user_bor[l]);
     }
     for (k = 0; k < 9; k++) {
@@ -62,6 +62,10 @@ void user_save(){
 void book_save(){
     FILE *file;
     Book *book_p = Book_h->next;
+    Book *t;
+    t = (Book *) malloc(sizeof (Book));
+    Book *p = (Book *) malloc(sizeof (Book));
+    int i,j;
     if(!book_p){
         return;
     }
@@ -69,24 +73,76 @@ void book_save(){
         printf("Failed to open books file.\n");
         exit(1);
     }
+//    Book *book_t = Book_h->next;
+//    while(book_t){
+//        t->title = (char *) malloc(sizeof (t->title));
+//        t->authors = (char *) malloc(sizeof (t->authors));
+//        strcpy(t->title,book_t->title);
+//        strcpy(t->authors,book_t->authors);
+//        for(i = 0; i < strlen(t->title); i++){
+//            if(t->title[i] == ' '){
+//                t->title[i] = '_';
+//            }
+//        }
+//        for(j = 0; j < strlen(t->authors); j++){
+//            if(t->authors[j] == ' '){
+//                t->authors[j] = '_';
+//            }
+//        }
+//        fprintf(file, "%d ", book_t->id);
+//        fprintf(file,"%s ",t->title);
+//        fprintf(file,"%s ",t->authors);
+//        fprintf(file, "%d ", book_t->year);
+//        fprintf(file, "%d\n", book_t->copies);
+//        book_t = book_t->next;
+//    }
+//    free(book_t);
     while (book_p->next){
+        t->title = (char *) malloc(sizeof (t->title));
+        t->authors = (char *) malloc(sizeof (t->authors));
+        strcpy(t->title,book_p->title);
+        strcpy(t->authors,book_p->authors);
+        for(i = 0; i < strlen(t->title); i++){
+            if(t->title[i] == ' '){
+                t->title[i] = '_';
+            }
+        }
+        for(j = 0; j < strlen(t->authors); j++){
+            if(t->authors[j] == ' '){
+                t->authors[j] = '_';
+            }
+        }
         fprintf(file, "%d ", book_p->id);
 //        book_p->title[strlen(book_p->title)] = '\t';
 //        fputs(book_p->title,file);
 //        book_p->authors[strlen(book_p->authors)] = '\t';
 //        fputs(book_p->authors,file);
-        fprintf(file,"%s ",book_p->title);
-        fprintf(file,"%s ",book_p->authors);
+        fprintf(file,"%s ",t->title);
+        fprintf(file,"%s ",t->authors);
         fprintf(file, "%d ", book_p->year);
         fprintf(file, "%d\n", book_p->copies);
-
         book_p = book_p->next;
     }
+    p->title = (char *) malloc(300 * sizeof (char));
+    p->authors = (char *) malloc(300 * sizeof (char));
+    strcpy(p->title,book_p->title);
+    strcpy(p->authors,book_p->authors);
+    for(i = 0; i < strlen(p->title); i++){
+        if(p->title[i] == ' '){
+            p->title[i] = '_';
+        }
+    }
+    for(j = 0; j < strlen(p->authors); j++){
+        if(p->authors[j] == ' '){
+            p->authors[j] = '_';
+        }
+    }
     fprintf(file, "%d ", book_p->id);
-    fprintf(file,"%s ",book_p->title);
-    fprintf(file,"%s ",book_p->authors);
+    fprintf(file,"%s ",p->title);
+    fprintf(file,"%s ",p->authors);
     fprintf(file, "%d ", book_p->year);
     fprintf(file, "%d", book_p->copies);
+//    free(p);
     fclose(file);
 }
 

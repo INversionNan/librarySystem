@@ -3,6 +3,7 @@
 #include <string.h>
 
 Book *Book_load(){
+    int i,j;
     FILE *file;
     Book *h=NULL,*t=h,*p;
     if((file=fopen("books.txt","r"))==NULL){
@@ -19,11 +20,21 @@ Book *Book_load(){
     while(!feof(file)){
         p=(Book *)malloc(sizeof(Book));
         p->next=NULL;
-        p->title = (char *)malloc(sizeof (p->title));
-        p->authors = (char *)malloc(sizeof (p->authors));
+        p->title = (char *)malloc(300 * sizeof (char ));
+        p->authors = (char *)malloc(300 * sizeof (char));
         fscanf(file,"%d",&p->id);
         fscanf(file,"%s",p->title);
+        for(i = 0; i < strlen(p->title); i ++){
+            if(p->title[i] == '_'){
+                p->title[i] = ' ';
+            }
+        }
         fscanf(file,"%s",p->authors);
+        for(j = 0; j < strlen(p->authors); j ++){
+            if(p->authors[j] == '_'){
+                p->authors[j] = ' ';
+            }
+        }
 //        printf("%s\n",p->title);
 //        printf("%s\n",p->authors);
         fscanf(file,"%d",&p->year);

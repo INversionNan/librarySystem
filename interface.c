@@ -15,7 +15,7 @@ void welcome(){
 }
 
 void menu(){
-    printf("Please choose an option\n\n");
+    printf("\nPlease choose an option\n\n");
     printf("1)Register an account\n");
     printf("2)Login\n");
     printf("3)Search for books\n");

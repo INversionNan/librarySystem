@@ -140,7 +140,7 @@ void Save();
 
 //void load_User();
 
-void display_borrow();
+void display_borrow(User *user_re);
 
 int judge(User *user_bo, char *Book_borrow);
 
@@ -148,8 +148,9 @@ int judge_Id(User *user_bo, int Book_borrowId);
 
 Book *repeated(char *a ,char *b, unsigned int c);
 
+int find_title(char *title,char *author);
+
 Book *Book_h;
-Book *Book_bor;
 User *User_h;
 Librarian *Lib_h;
 BookList *list;

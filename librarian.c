@@ -7,13 +7,40 @@ int store_books(FILE *file) {
 //    int i, f;
 //    char g;
 //    char e[100];
-    Book *book_p;
+    Book *book_p, *p, *t;
+    int i, j;
     if((file = fopen("books.txt","w+")) == NULL){
         printf("Failed to open books file.\n");
         exit(1);
     }
     book_p = Book_h;
     book_p = book_p->next;
+    p = (Book *) malloc(sizeof (Book));
+//    Book *book_save = Book_h->next;
+//    while(book_save){
+//
+//        strcpy(p->title,book_save->title);
+//        strcpy(p->authors,book_save->authors);
+//        for(i = 0; i < strlen(p->title); i++){
+//            if(p->title[i] == ' '){
+//                p->title[i] = '_';
+//            }
+//        }
+//        for(j = 0; j < strlen(p->authors); j++){
+//            if(p->authors[j] == ' '){
+//                p->authors[j] = '_';
+//            }
+//        }
+//        fprintf(file, "%d ", book_save->id);
+//        fprintf(file,"%s ",p->title);
+//        fprintf(file,"%s ",p->authors);
+//        fprintf(file, "%d ", book_save->year);
+//        fprintf(file, "%d\n", book_save->copies);
+//        book_save = book_save->next;
+//    }
+//    t = p;
+//    t->title = (char *) malloc(sizeof (t->title));
+//    t->authors = (char *) malloc(sizeof (t->authors));
 //    if(!book_p->next){
 //        fprintf(file, "%d\n", book_p->id);
 //        book_p->title[strlen(book_p->title)] = '\n';
@@ -40,20 +67,49 @@ int store_books(FILE *file) {
 //        fputs(book_p->authors,file);
 
     while (book_p->next){
+        p->title = (char *) malloc(300 * sizeof (char));
+        p->authors = (char *) malloc(300 * sizeof (char));
+        strcpy(p->title,book_p->title);
+        strcpy(p->authors,book_p->authors);
+        for(i = 0; i < strlen(p->title); i++){
+            if(p->title[i] == ' '){
+                p->title[i] = '_';
+            }
+        }
+        for(j = 0; j < strlen(p->authors); j++){
+            if(p->authors[j] == ' '){
+                p->authors[j] = '_';
+            }
+        }
         fprintf(file, "%d ", book_p->id);
 //        book_p->title[strlen(book_p->title)] = '\t';
 //        fputs(book_p->title,file);
 //        book_p->authors[strlen(book_p->authors)] = '\t';
 //        fputs(book_p->authors,file);
-        fprintf(file,"%s ",book_p->title);
-        fprintf(file,"%s ",book_p->authors);
+        fprintf(file,"%s ",p->title);
+        fprintf(file,"%s ",p->authors);
         fprintf(file, "%d ", book_p->year);
         fprintf(file, "%d\n", book_p->copies);
         book_p = book_p->next;
     }
+    t = (Book *) malloc(sizeof (Book));
+    t->title = (char *) malloc(300 * sizeof (char));
+    t->authors = (char *) malloc(300 * sizeof (char));
+    strcpy(t->title,book_p->title);
+    strcpy(t->authors,book_p->authors);
+    for(i = 0; i < strlen(t->title); i++){
+        if(t->title[i] == ' '){
+            t->title[i] = '_';
+        }
+    }
+    for(j = 0; j < strlen(t->authors); j++){
+        if(t->authors[j] == ' '){
+            t->authors[j] = '_';
+        }
+    }
     fprintf(file, "%d ", book_p->id);
-    fprintf(file,"%s ",book_p->title);
-    fprintf(file,"%s ",book_p->authors);
+    fprintf(file,"%s ",t->title);
+    fprintf(file,"%s ",t->authors);
     fprintf(file, "%d ", book_p->year);
     fprintf(file, "%d", book_p->copies);
     fclose(file);
@@ -102,7 +158,7 @@ int store_books(FILE *file) {
 }
 
 int load_books(FILE *file){
-    int i;
+    int i ,j ,m;
     Book *k=NULL;
     Book *t = k;
     Book *a;
@@ -125,11 +181,22 @@ int load_books(FILE *file){
     while(!feof(file)){
         a=(Book *)malloc(sizeof(Book));
         a->next=NULL;
-        a->title = (char *)malloc(sizeof (a->title));
-        a->authors = (char *)malloc(sizeof (a->authors));
+        a->title = (char *)malloc(300 * sizeof (char));
+        a->authors = (char *)malloc(300 * sizeof (char));
         fscanf(file,"%d",&a->id);
         fscanf(file,"%s",a->title);
+        for(j = 0; j < strlen(a->title); j++){
+            if(a->title[j] == '_'){
+                a->title[j] = ' ';
+            }
+        }
+
         fscanf(file,"%s",a->authors);
+        for(m = 0; m < strlen(a->authors); m++){
+            if(a->authors[m] == '_'){
+                a->authors[m] = ' ';
+            }
+        }
         fscanf(file,"%d",&a->year);
         fscanf(file,"%d",&a->copies);
         if(k == NULL){
@@ -147,6 +214,7 @@ int load_books(FILE *file){
 Book *repeated(char *a ,char *b, unsigned int c){
     Book *book_p1 = Book_h->next;
     while (book_p1){
+
         if(strcmp(a, book_p1->title)==0 && strcmp(b, book_p1->authors)==0
            && (c == book_p1->year)){
             return book_p1;
@@ -192,6 +260,7 @@ int add_book(Book book){
         }
         switch (addb) {
             case '1':
+                display();
                 printf("\nEnter the title of the book you wish to add:\n");
                 fflush(stdin);
                 gets(t);
@@ -204,10 +273,18 @@ int add_book(Book book){
                 book.authors = (char *) malloc(300 * sizeof (char));
                 strcpy(book.authors,t);
 
-                printf("Enter the year of the book you wish to add:\n");
-                fflush(stdin);
-                gets(t);
-                book.year = atoi(t);
+                while (1){
+                    printf("Enter the year of the book you wish to add:\n");
+                    fflush(stdin);
+                    gets(t);
+                    book.year = atoi(t);
+                    if(book.year > 0 && book.year <= 2022){
+                        break;
+                    } else{
+                        printf("\nWrong year, please enter year again.\n\n");
+                        continue;
+                    }
+                }
 
 //                scanf("%d",&add->year);
 //                getchar();
@@ -249,6 +326,7 @@ int add_book(Book book){
                 //store_books(file);
                 break;
             case '2':
+                display();
                 printf("\nEnter the title of the book you wish to add:\n");
                 fflush(stdin);
                 gets(p);
@@ -299,6 +377,7 @@ int add_book(Book book){
 
                 book_p4 = repeated(book.authors,book.title,book.year);
                 book_p4->copies += book.copies;
+
                 store_books(file);
                 break;
 
