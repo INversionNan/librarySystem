@@ -26,7 +26,7 @@ typedef struct _BookList {
 
 typedef struct user{
     char user_pass[20];				//User passwords
-    char user_num[10];				//User number
+    char user_num[10];				//User ID number
     char user_name[20];				//User name
     int user_bor[10];               //User borrow ID
     char user_bor_book[10][20];		//User borrow title
@@ -80,67 +80,65 @@ BookList find_book_by_author (const char *author);
 //list is the NULL pointer.
 BookList find_book_by_year (unsigned int year);
 
-void welcome();
+void welcome();//show the welcome information
 
-void menu();
+void menu();//show the basic menu
 
-void user_choice();
+void user_choice();//show the user menu
 
-void li_choice();
+void li_choice();//show the librarian menu
 
-void add_choice();
+void add_choice();//show the add menu
 
-void search_choice();
+void search_choice();//show the search menu
 
-void borrow_choice();
+void borrow_choice();//show the borrow menu
 
-void goodbye();
+void goodbye();// show the goodbye information
 
-User *repeat(char *a ,char *b);
+User *repeat(char *a ,char *b);//Check
 
 void reg();//register
 
 void login(); //login
 
-User *compare_name(char *login_name);
+User *compare_name(char *login_name);//Compare username in the user_list and user enter name
 
 //void log_out();//logged out
 
-User *User_load(); // load user
+User *User_load(); //Load the user information to the linked list
 
-void user_save(); //Store the information in the student linked list in a file
+void user_save(); //Store the user information in the user linked list in a file
 
-void book_save();//tore the information in the book linked list in a file
+void book_save();//Store the book information in the book linked list in a file
 
-void lib_save();//tore the information in the librarian linked list in a file
+void lib_save();//Store the information in the librarian linked list in a file
 
 void search(); //Search for books
 
 void display(); // Display all books
 
-void password_input(char *password);
+void password_input(char *password);//Enter password
 
-int check(char *password);
+int check(char *password);//Check whether the two passwords are the same
 
-int verify(char *password);
+int verify(char *password);//Verify that the password is entered correctly
 
-Book *exist(int Book_id);
+Book *exist(int Book_id);//Check whether the book exists
 
 Book *exist_title(char *Book_title, char *Book_author);
 
-Librarian *Lib_load();
+Librarian *Lib_load();//Load the librarian information to the linked list
 
 //void lib();
 
-void borrow(User *user_bo);
+void borrow(User *user_bo);// borrow books
 
-void return_book(User *user_re);
+void return_book(User *user_re);//return books
 
-void Save();
+void Save();//Save all the information
 
-//void load_User();
-
-void display_borrow(User *user_re);
+void display_borrow(User *user_re);//
 
 int judge(User *user_bo, char *Book_borrow);
 

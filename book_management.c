@@ -9,14 +9,14 @@ Book *Book_load(){
     if((file=fopen("books.txt","r"))==NULL){
         file = fopen("books.txt","w+");
     }
-    getc(file);
+    getc(file);//If a character is read from a file, EOF is returned at the end of the file without data
+
     if(feof(file)){
         fclose(file);
         return NULL;
-    }
-    rewind(file);
-//    char *num;
-//    num = (char *) malloc(300 * sizeof (char));
+    }//Check end of file on stream (read end of file)
+
+    rewind(file);//Redirects the position pointer inside a file to the beginning of a stream (data stream/file)
     while(!feof(file)){
         p=(Book *)malloc(sizeof(Book));
         p->next=NULL;
@@ -28,46 +28,22 @@ Book *Book_load(){
             if(p->title[i] == '_'){
                 p->title[i] = ' ';
             }
-        }
+        }//Replace the underscore with a space
         fscanf(file,"%s",p->authors);
         for(j = 0; j < strlen(p->authors); j ++){
             if(p->authors[j] == '_'){
                 p->authors[j] = ' ';
             }
-        }
-//        printf("%s\n",p->title);
-//        printf("%s\n",p->authors);
+        }//Replace the underscore with a space
         fscanf(file,"%d",&p->year);
         fscanf(file,"%d",&p->copies);
-//
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        p->id = atoi(num);
-
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        strcpy(p->title,num);
-//        p->authors[strlen(p->title)-1] = '\0';
-//
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        strcpy(p->authors,num);
-//        p->authors[strlen(p->authors)-1] = '\0';
-
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        p->year = atoi(num);
-//
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        p->copies = atoi(num);
         if(h==NULL){
             h = p;
         }else{
             t->next=p;
         }
         t = p;
-    }
+    }//Read file information line by line into the linked list until the end of the file
     fclose(file);
     return h;
 }

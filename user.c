@@ -118,7 +118,8 @@ void login(){
         }
         else if(strcmp(lib, login_name) == 0){
             printf("Please enter your password:");
-            login_user = Lib_h->next;
+            strcpy(login_user->user_pass,Lib_h->next->lib_pass);
+//            login_user = Lib_h->next;
             if(verify(login_user->user_pass) == 0){
                 printf("You have entered three errors in a row and will exit the program.\n\n");
                 return;
@@ -356,30 +357,41 @@ void borrow(User *user_bo){
                 break;
             }
         }
+        borrow_title = (char *) malloc(sizeof (borrow_title));
+        borrow_author = (char *) malloc(sizeof (borrow_author));
         switch (borrow_option) {
             case '1':
                 display();
                 printf("\n\nYou have already borrowed %d books, and you can borrow %d more books.\n",cot, 10-cot);
                 printf("Please enter the ID number of the book you want to borrow:\n");
                 fflush(stdin);
-                scanf("%d",&numborrow);
-                getchar();
+                while(1){
+                    int count_5 = 0;
+                    scanf("%c",&numborrow);
+                    while(getchar()!='\n') count_5 ++;
+                    if(count_5 > 3){
+                        printf("Sorry, the option you enter was invalid, please try again.\n");
+                        continue;
+                    }else{
+                        break;
+                    }
+                }
                 borrow = exist(numborrow);
                 if(!borrow){
-                    printf("Sorry ,the library does not have this book.\n ");
+                    printf("Sorry ,the library does not have this book.\n");
                     printf("You failed to borrow it.\n");
-                    return;
+                    break;
                 }
                 if(borrow->copies == 0){
                     printf("Sorry, this book is out of stock.\n");
                     printf("You failed to borrow it.\n");
-                    return;
+                    break;
                 }
                 if(judge_Id(user_bo,numborrow)){
                     printf("Sorry, you have borrowed it before.\n");
                     printf("Do not borrow it again.\n");
                     printf("You failed to borrow it.\n\n");
-                    return;
+                    break;
                 }
                 for(i = 0; i < 10; i++){
                     if(user_bo->user_bor[i]== 0){
@@ -394,8 +406,6 @@ void borrow(User *user_bo){
                 cot = 0;
                break;
             case '2':
-                borrow_title = (char *) malloc(sizeof (borrow_title));
-                borrow_author = (char *) malloc(sizeof (borrow_author));
                 display();
                 printf("\n\nYou have already borrowed %d books, and you can borrow %d more books.\n",cot, 10-cot);
                 printf("Please enter the title of the book you want to borrow:\n");
@@ -409,13 +419,13 @@ void borrow(User *user_bo){
                     printf("Sorry ,the library does not have this book.\n ");
                     printf("You failed to borrow it.\n");
                     free(borrow_title);
-                    return;
+                    break;
                 }
                 if(borrow->copies == 0){
                     printf("Sorry, this book is out of stock.\n");
                     printf("You failed to borrow it.\n");
                     free(borrow_title);
-                    return;
+                    break;
                 }
                 int id_num = find_title(borrow_title,borrow_author);
                 strcat(borrow_title,borrow_author);
@@ -430,7 +440,7 @@ void borrow(User *user_bo){
                     printf("Do not borrow it again.\n");
                     printf("You failed to borrow it.\n\n");
                     free(borrow_title);
-                    return;
+                    break;
                 }
                 int j;
                 for(i = 0; i < 10; i++){
@@ -526,9 +536,17 @@ void return_book(User *user_re){
         return;
     }
     printf("\nPlease enter the ID number of the book you want to return:\n");
-    scanf("%d",&num_return);
-    getchar();
-
+    while(1){
+        int count_6 = 0;
+        scanf("%c",&num_return);
+        while(getchar()!='\n') count_6 ++;
+        if(count_6 > 0){
+            printf("Sorry, the option you enter was invalid, please try again.\n");
+            continue;
+        }else{
+            break;
+        }
+    }
     for(i = 0; i < 10 ; ++i){
         if(user_re->user_bor[i] == num_return){
             cot_2 = 1;
@@ -564,6 +582,7 @@ void return_book(User *user_re){
 BookList find_book_by_title (const char *title){
     BookList list_title;
     int title_num = 0;
+    Book *book_p;
     Book *book_title = Book_h->next;
     while (1){
         if(!book_title){
@@ -634,7 +653,7 @@ BookList find_book_by_year (unsigned int year){
     while (1){
         if(!book_year){
             if(year_num == 0){
-                printf("Sorry, there are no books which are called as this title in the library.\n\n");
+                printf("Sorry, there are no books which are called as this year in the library.\n\n");
                 break;
             }
             break;
@@ -662,9 +681,8 @@ BookList find_book_by_year (unsigned int year){
 
 
 void search(){
-    Book *search = Book_h->next;
     char book_search = 1;
-    char *search_title, *search_authors;
+    char *search_title, *search_authors, *search_years;
     int search_year;
     while (book_search != '4'){
         while (1){
@@ -681,21 +699,22 @@ void search(){
         }
         switch (book_search) {
             case '1':
-                search_title = (char *) malloc(sizeof (char));
+                search_title = (char *) malloc(300*sizeof (char));
                 printf("Please enter the title you want to search:\n");
                 gets(search_title);
                 find_book_by_title(search_title);
                 break;
             case '2':
-                search_authors = (char *) malloc(sizeof (char));
+                search_authors = (char *) malloc(300*sizeof (char));
                 printf("Please enter the authors you want to search:\n");
                 gets(search_authors);
                 find_book_by_author(search_authors);
                 break;
             case '3':
-                printf("Please enter the title you want to search:\n");
-                scanf("%d",&search_year);
-                getchar();
+                search_years = (char *) malloc(sizeof (char));
+                printf("Please enter the year you want to search:\n");
+                gets(search_years);
+                search_year = atoi(search_years);
                 find_book_by_year(search_year);
                 break;
             case '4':

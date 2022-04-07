@@ -29,10 +29,6 @@ int store_books(FILE *file) {
             }
         }
         fprintf(file, "%d ", book_p->id);
-//        book_p->title[strlen(book_p->title)] = '\t';
-//        fputs(book_p->title,file);
-//        book_p->authors[strlen(book_p->authors)] = '\t';
-//        fputs(book_p->authors,file);
         fprintf(file,"%s ",p->title);
         fprintf(file,"%s ",p->authors);
         fprintf(file, "%d ", book_p->year);
@@ -77,13 +73,13 @@ int load_books(FILE *file){
         printf("Failed to open the file");
         exit(1);
     }
-    getc(file);
+    getc(file);//If a character is read from a file, EOF is returned at the end of the file without data
     if(feof(file)){
         fclose(file);
         i = 0;
         return i;
-    }
-    rewind(file);
+    }//Check end of file on stream (read end of file)
+    rewind(file);//Redirects the position pointer inside a file to the beginning of a stream (data stream/file)
     while(!feof(file)){
         a=(Book *)malloc(sizeof(Book));
         a->next=NULL;
@@ -95,14 +91,14 @@ int load_books(FILE *file){
             if(a->title[j] == '_'){
                 a->title[j] = ' ';
             }
-        }
+        }//Replace the underscore with a space
 
         fscanf(file,"%s",a->authors);
         for(m = 0; m < strlen(a->authors); m++){
             if(a->authors[m] == '_'){
                 a->authors[m] = ' ';
             }
-        }
+        }//Replace the underscore with a space
         fscanf(file,"%d",&a->year);
         fscanf(file,"%d",&a->copies);
         if(k == NULL){
@@ -111,7 +107,7 @@ int load_books(FILE *file){
             t->next = a;
         }
         t = a;
-    }
+    }//Read file information line by line into the linked list until the end of the file
     fclose(file);
     i = 1;
     return i;
@@ -120,7 +116,6 @@ int load_books(FILE *file){
 Book *repeated(char *a ,char *b, unsigned int c){
     Book *book_p1 = Book_h->next;
     while (book_p1){
-
         if(strcmp(a, book_p1->title)==0 && strcmp(b, book_p1->authors)==0
            && (c == book_p1->year)){
             return book_p1;
@@ -136,9 +131,6 @@ int add_book(Book book){
     char *t, *p;
     p = (char *) malloc(300 * sizeof (char ));
     t = (char *) malloc(300 * sizeof (char ));
-//    add->next = NULL;
-//    add_1->next = NULL;
-//    book.next = NUll;
 
     while(addb != '3'){
         Book *book_p3, *book_p4;
@@ -192,10 +184,6 @@ int add_book(Book book){
                     }
                 }
 
-//                scanf("%d",&add->year);
-//                getchar();
-//                book.year = add->year;
-
                 if(repeated(book.title,book.authors,book.year)){
                     printf("This book has already existed, so no new book can be added\n");
                     printf("If you want to add it, please choose option 2.\n");
@@ -204,20 +192,16 @@ int add_book(Book book){
                 }
 
                 printf("Enter the copies of the book you wish to add:\n");
-//                scanf("%d",&add->copies);
-//                getchar();
-//                book.copies = add->copies;
                 fflush(stdin);
                 gets(t);
                 book.copies = atoi(t);
-//                printf("1111111111\n");
+
                 strcpy(add->title,book.title);
                 strcpy(add->authors,book.authors);
-//                add->title = book.title;
-//                add->authors = book.authors;
                 add->year = book.year;
                 add->copies = book.copies;
                 add->id = book.id + 1;
+
                 while (1){
                     if(book_p3->next == NULL){
                         add->next = NULL;
@@ -229,6 +213,7 @@ int add_book(Book book){
                     book_p3 = book_p3->next;
                 }
                 book_save();
+                printf("You have added this book successfully.\n");
                 //store_books(file);
                 break;
             case '2':
@@ -250,10 +235,6 @@ int add_book(Book book){
                 gets(p);
                 book.year = atoi(p);
 
-//                scanf("%d",&add->year);
-//                getchar();
-//                book.year = add->year;
-
                 if(repeated(book.title,book.authors,book.year) == NULL){
                     printf("This book does not exist in stock.\n");
                     printf("If you want to add it, please choose option 1,\n");
@@ -262,29 +243,20 @@ int add_book(Book book){
                 }
 
                 printf("Enter the copies of the book you wish to add:\n");
-//                scanf("%d",&add->copies);
-//                getchar();
-//                book.copies = add->copies;
                 fflush(stdin);
                 gets(p);
                 book.copies = atoi(p);
 
                 strcpy(add_1->title,book.title);
                 strcpy(add_1->authors,book.authors);
-//                add_1->title = book.title;
-//                add_1->authors = book.authors;
                 add_1->year = book.year;
                 add_1->copies = book.copies;
-
-//                while (add_1->next){
-//                    add = add_1->next;
-//                }
-//                add_1->next = add_1;
 
                 book_p4 = repeated(book.authors,book.title,book.year);
                 book_p4->copies += book.copies;
 
                 store_books(file);
+                printf("You have added the copies of this book successfully.\n");
                 break;
 
             case '3':break;

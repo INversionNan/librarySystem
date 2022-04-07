@@ -17,36 +17,23 @@ void user_save(){
         printf("Failed to open the user file.\n");
         exit(1);
     }
-//    file= fopen("user.txt","w+");
+
     while (user_p->next){
-//        printf("%s\n\n\n",user_p->user_name);
-//        printf("%s",User_h->next->user_name);
         fprintf(file,"%s ",user_p->user_name);
         fprintf(file,"%s ",user_p->user_num);
         fprintf(file,"%s ",user_p->user_pass);
-//        fprintf(file,"%s",p->user_name);
-//        fprintf(file,"%s",p->user_num);
-//        fprintf(file,"%s",p->user_pass);
         for(j = 0; j < 10 ;j++){
             fprintf(file,"%d ",user_p->user_bor[j]);
         }
         for(i = 0; i < 9; i++){
             fprintf(file,"%s ",user_p->user_bor_book[i]);
-//            fprintf(file,"%s",p->user_bor_book[i]);
         }
         fprintf(file,"%s\n",user_p->user_bor_book[9]);
-//        fprintf(file,"%s\n",p->user_bor_book[9]);
-//        fclose(file);
     user_p = user_p->next;
     }
-//    printf("%s\n\n\n",user_p->user_name);
-//    printf("%s",User_h->next->user_name);
     fprintf(file,"%s ",user_p->user_name);
     fprintf(file,"%s ",user_p->user_num);
     fprintf(file,"%s ",user_p->user_pass);
-//    fputs(user_p->user_name,file);
-//    fputs(user_p->user_num,file);
-//    fputs(user_p->user_pass,file);
     int k,l;
     for(l = 0; l < 10; l++){
         fprintf(file,"%d ",user_p->user_bor[l]);
@@ -55,7 +42,6 @@ void user_save(){
         fprintf(file,"%s ",user_p->user_bor_book[k]);
     }
     fprintf(file,"%s",user_p->user_bor_book[9]);
-//    user_p->next = NULL;
     fclose(file);
 }
 
@@ -135,15 +121,6 @@ void lib_save(){
         fprintf(file,"%s\t", lib_password);
         fprintf(file,"%s\n", lib_a);
     }
-//    while ( lib_p ->next){
-//        fprintf(file,"%s\t",lib_p->lib_name);
-//        fprintf(file,"%s\t",lib_p->lib_pass);
-//        fprintf(file,"%s\n",lib_p->lib_acc);
-//        lib_p = lib_p->next;
-//    }
-//    fprintf(file,"%s\t",lib_p->lib_name);
-//    fprintf(file,"%s\t",lib_p->lib_pass);
-//    fprintf(file,"%s\t",lib_p->lib_acc);
     fclose(file);
 }
 
@@ -154,54 +131,3 @@ void Save(){
     goodbye();
     exit(0);
 }
-
-//void load_User(){
-//    FILE *file;
-//    User *h=NULL,*t = h,*p_stu;
-//    int i;
-//    if((file = fopen("user.txt","r"))==NULL){
-//        file = fopen("user.txt","w+");
-//    }
-//    getc(file);
-//    if(feof(file)){
-//        fclose(file);
-//        return;
-//    }
-//    rewind(file);
-//    while(!feof(file)){
-//        while (1){
-//            fscanf()
-//        }
-
-//        a = (Book *)malloc(sizeof(Book));
-//        a->next = NULL;
-//
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        a->id = atoi(num);
-//
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        strcpy(a->title,num);
-//
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        strcpy(a->authors,num);
-//
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        a->year = atoi(num);
-//
-//        fgets(num,50,file);
-//        num[strlen(num)-1] = '\0';
-//        a->copies = atoi(num);
-
-//        if(k == NULL){
-//            k = a;
-//        } else{
-//            t->next = a;
-//        }
-//        t = a;
-//    }
-//    fclose(file);
-//}

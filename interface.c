@@ -58,7 +58,7 @@ void borrow_choice(){
 }
 
 void search_choice(){
-    printf("Please choose an option:\n\n");
+    printf("\nPlease choose an option:\n\n");
     printf("1)Find books by title\n");
     printf("2)Find books by authors\n");
     printf("3)Find books by year\n");
