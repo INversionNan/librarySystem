@@ -249,7 +249,7 @@ User *User_load(){
 
 void display(){
     Book *p2 = Book_h->next;
-    int a, len, ID_len = 2, title_len = 5, authors_len = 5;
+    int a, len, ID_len = 2, title_len = 5, authors_len = 7;
     if(!p2){
         printf("\nThere are no books in the library at present.\n");
         return;
@@ -274,14 +274,14 @@ void display(){
         p3 = p3->next;
     }
     Book *p1 = Book_h->next;
-    printf("%-*s\t",ID_len,"ID");
-    printf("%-*s\t",title_len,"Title");
-    printf("%-*s\t",authors_len,"Authors");
-    printf("%s\t","Year");
-    printf("%s\t","Copies");
+    printf("%-*s    ",ID_len,"ID");
+    printf("%-*s    ",title_len,"Title");
+    printf("%-*s    ",authors_len,"Authors");
+    printf("%s    ","Year");
+    printf("%s","Copies");
     printf("\n");
     while(p1 != NULL){
-        printf("%-*d\t %-*s\t %-*s\t %d\t %d\n",ID_len,p1->id, title_len,p1->title,authors_len, p1->authors, p1->year, p1->copies);
+        printf("%-*d    %-*s    %-*s    %-4d    %d\n",ID_len,p1->id, title_len,p1->title,authors_len, p1->authors, p1->year, p1->copies);
         p1 = p1->next;
     }
 }
@@ -463,7 +463,7 @@ void borrow(User *user_bo){
 
 void display_borrow(User *user_re){
     int i;
-    int a, len, ID_len = 2, title_len = 5, authors_len = 5;
+    int a, len, ID_len = 2, title_len = 5, authors_len = 7;
     Book *p4 = Book_h->next;
     while (p4){
         for(i = 0 ; i < 10 ;i ++){
@@ -488,16 +488,16 @@ void display_borrow(User *user_re){
         p4 = p4->next;
     }
     Book *p3 = Book_h->next;
-    printf("%-*s\t",ID_len,"ID");
-    printf("%-*s\t",title_len,"Title");
-    printf("%-*s\t",authors_len,"Authors");
-    printf("%s\t","Year");
-    printf("%s\t","Copies");
+    printf("%-*s    ",ID_len,"ID");
+    printf("%-*s    ",title_len,"Title");
+    printf("%-*s    ",authors_len,"Authors");
+    printf("%s    ","Year");
+    printf("%s","Copies");
     printf("\n");
     while (p3 != NULL){
         for(i = 0; i < 10; i++){
             if(user_re->user_bor[i] == p3->id){
-                printf("%-*d\t %-*s\t %-*s\t %d\t %d\n",ID_len,p3->id, title_len,p3->title, authors_len,p3->authors, p3->year, p3->copies);
+                printf("%-*d    %-*s    %-*s    %-4d    %d\n",ID_len,p3->id, title_len,p3->title,authors_len, p3->authors, p3->year, p3->copies);
             }
         }
         p3 = p3->next;
@@ -606,7 +606,7 @@ BookList find_book_by_author (const char *author){
             }
             break;
         }
-        if(strcmp(author,book_author->title) == 0){
+        if(strcmp(author,book_author->authors) == 0){
             if(author_num == 0){
                 printf("%s\t","ID");
                 printf("%s\t","Title");

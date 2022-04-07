@@ -71,7 +71,101 @@ Book *Book_load(){
     fclose(file);
     return h;
 }
-int main() {
+int main(int argc, char ** argv) {
+    char info[265];
+    memset(info, '\0',sizeof info);
+    char *book_file = NULL;
+    char *user_file = NULL;
+    int d = 1;
+    int b = 1;
+    int c = 0;
+    while (d < argc){
+        if(c == 0){
+            if((strlen(argv[d])) > 259){
+                printf("The maximum word length of the file name is exceeded.\n");
+                break;
+            }
+            strcpy(info, argv[d]);
+            c = 1;
+        }else{
+            if((strlen(info)+ strlen(argv[d]) + 2) > 259){
+                printf("The maximum word length of the file name is exceeded.\n");
+                break;
+            }
+            strcat(info," ");
+            strcat(info, argv[d]);
+        }
+        if(strlen(info) < 4){
+            d++;
+            continue;
+        }
+        if(info[strlen(info) - 1] != 't' || info[strlen(info) - 2] != 'x'|| info[strlen(info) - 3] != 't' || info[strlen(info) - 4] != '.'){
+            d++;
+            continue;
+        }else{
+            if(b == 1){
+                book_file = (char *) malloc(strlen(info)+1);
+                strcpy(book_file, info);
+                b++;
+            } else if(b == 2){
+                user_file = (char *) malloc(strlen(info)+1);
+                strcpy(user_file, info);
+                b++;
+            }else if(b == 3){
+                printf("This is an invalid input which has been ignored! \n");
+                break;
+            }
+            memset(info, '\0',sizeof info);
+            b = 0;
+        }
+        d++;
+    }
+
+    if(!book_file){
+        printf("\nPlease enter a valid book filename which should end with .txt: ");
+        while (1){
+            fgets(info,265,stdin);
+            int i;
+            for(i = 0; i < strlen(info); i ++){
+                if(info[i] == '\r' || info[i] == '\n'){
+                    info[i] = '\0';
+                    break;
+                }
+            }
+            if(strlen(info) < 4){
+                printf("\nPlease re-enter a valid book filename which should end with .txt: ");
+                continue;
+            }else if(info[strlen(info) - 1] == 't' && info[strlen(info) - 2] == 'x' && info[strlen(info) - 3] == 't' && info[strlen(info) - 4] == '.' ){
+                book_file = (char *) malloc(strlen(info) + 1);
+                strcpy(book_file,info);
+                break;
+            }else{
+                printf("\nPlease re-enter a valid book filename which should end with .txt: ");
+            }
+        }
+    }
+
+    if(!user_file){
+        printf("\nPlease enter a valid user filename which should end with .txt: ");
+        while (1){
+            fgets(info,265,stdin);
+            int j;
+            for(j = 0; j < strlen(info); j ++){
+                if(info[j] == '\r' || info[j] == '\n'){
+                    info[j] = '\0';
+                    break;
+                }
+            }
+            if(info[strlen(info) - 1] == 't' && info[strlen(info) - 2] == 'x' && info[strlen(info) - 3] == 't' && info[strlen(info) - 4] == '.'){
+                user_file = (char *) malloc(strlen(info) + 1);
+                strcpy(user_file, info);
+                break;
+            } else{
+                printf("\nPlease re-enter a valid user filename which should end with .txt: ");
+            }
+        }
+    }
+
 
     Book_h = (Book *)malloc(sizeof (Book));
     User_h = (User *) malloc(sizeof (User));
