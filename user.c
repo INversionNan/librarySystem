@@ -582,7 +582,28 @@ void return_book(User *user_re){
 BookList find_book_by_title (const char *title){
     BookList list_title;
     int title_num = 0;
-    Book *book_p;
+    int i, a, len, ID_len = 2, title_len = 5, authors_len = 7;;
+    Book *p5 = Book_h->next;
+    while (p5) {
+        for (i = 0; i < 10; i++) {
+            len = 0;
+            a = p5->id;
+            while (a > 0) {
+                a /= 10;
+                len++;
+            }
+            if (len > ID_len) {
+                ID_len = len;
+            }
+            if (strlen(p5->title) > title_len) {
+                title_len = strlen(p5->title);
+            }
+            if (strlen(p5->authors) > authors_len) {
+                authors_len = strlen(p5->authors);
+            }
+        }
+        p5 = p5->next;
+    }
     Book *book_title = Book_h->next;
     while (1){
         if(!book_title){
@@ -594,18 +615,19 @@ BookList find_book_by_title (const char *title){
         }
         if(strcmp(title,book_title->title) == 0){
             if(title_num == 0){
-                printf("%s\t","ID");
-                printf("%s\t","Title");
-                printf("%s\t","Authors");
-                printf("%s\t","Year");
-                printf("%s\t\n","Copies");
+                printf("%-*s    ",ID_len,"ID");
+                printf("%-*s    ",title_len,"Title");
+                printf("%-*s    ",authors_len,"Authors");
+                printf("%s    ","Year");
+                printf("%s","Copies");
+                printf("\n");
             }
             title_num ++;
-            printf("%d\t",book_title->id);
-            printf("%s\t",book_title->title);
-            printf("%s\t",book_title->authors);
-            printf("%d\t",book_title->year);
-            printf("%d\t\n",book_title->copies);
+            printf("%-*d    ",ID_len,book_title->id);
+            printf("%-*s    ",title_len,book_title->title);
+            printf("%-*s    ",authors_len,book_title->authors);
+            printf("%-4d    ",book_title->year);
+            printf("%d    \n",book_title->copies);
         }
         book_title = book_title->next;
     }
@@ -616,6 +638,28 @@ BookList find_book_by_title (const char *title){
 BookList find_book_by_author (const char *author){
     BookList list_author;
     int author_num = 0;
+    int i, a, len, ID_len = 2, title_len = 5, authors_len = 7;;
+    Book *p6 = Book_h->next;
+    while (p6) {
+        for (i = 0; i < 10; i++) {
+            len = 0;
+            a = p6->id;
+            while (a > 0) {
+                a /= 10;
+                len++;
+            }
+            if (len > ID_len) {
+                ID_len = len;
+            }
+            if (strlen(p6->title) > title_len) {
+                title_len = strlen(p6->title);
+            }
+            if (strlen(p6->authors) > authors_len) {
+                authors_len = strlen(p6->authors);
+            }
+        }
+        p6 = p6->next;
+    }
     Book *book_author = Book_h->next;
     while (1){
         if(!book_author){
@@ -627,18 +671,19 @@ BookList find_book_by_author (const char *author){
         }
         if(strcmp(author,book_author->authors) == 0){
             if(author_num == 0){
-                printf("%s\t","ID");
-                printf("%s\t","Title");
-                printf("%s\t","Authors");
-                printf("%s\t","Year");
-                printf("%s\t\n","Copies");
+                printf("%-*s    ",ID_len,"ID");
+                printf("%-*s    ",title_len,"Title");
+                printf("%-*s    ",authors_len,"Authors");
+                printf("%s    ","Year");
+                printf("%s","Copies");
+                printf("\n");
             }
             author_num ++;
-            printf("%d\t",book_author->id);
-            printf("%s\t",book_author->title);
-            printf("%s\t",book_author->authors);
-            printf("%d\t",book_author->year);
-            printf("%d\t\n",book_author->copies);
+            printf("%-*d    ",ID_len,book_author->id);
+            printf("%-*s    ",title_len,book_author->title);
+            printf("%-*s    ",authors_len,book_author->authors);
+            printf("%-4d    ",book_author->year);
+            printf("%d    \n",book_author->copies);
         }
         book_author = book_author->next;
     }
@@ -649,6 +694,28 @@ BookList find_book_by_author (const char *author){
 BookList find_book_by_year (unsigned int year){
     BookList list_year;
     int year_num = 0;
+    int i, a, len, ID_len = 2, title_len = 5, authors_len = 7;;
+    Book *p7 = Book_h->next;
+    while (p7) {
+        for (i = 0; i < 10; i++) {
+            len = 0;
+            a = p7->id;
+            while (a > 0) {
+                a /= 10;
+                len++;
+            }
+            if (len > ID_len) {
+                ID_len = len;
+            }
+            if (strlen(p7->title) > title_len) {
+                title_len = strlen(p7->title);
+            }
+            if (strlen(p7->authors) > authors_len) {
+                authors_len = strlen(p7->authors);
+            }
+        }
+        p7 = p7->next;
+    }
     Book *book_year = Book_h->next;
     while (1){
         if(!book_year){
@@ -660,18 +727,19 @@ BookList find_book_by_year (unsigned int year){
         }
         if(book_year->year == year){
             if(year_num == 0){
-                printf("%s\t","ID");
-                printf("%s\t","Title");
-                printf("%s\t","Authors");
-                printf("%s\t","Year");
-                printf("%s\t\n","Copies");
+                printf("%-*s    ",ID_len,"ID");
+                printf("%-*s    ",title_len,"Title");
+                printf("%-*s    ",authors_len,"Authors");
+                printf("%s    ","Year");
+                printf("%s","Copies");
+                printf("\n");
             }
             year_num ++;
-            printf("%d\t",book_year->id);
-            printf("%s\t",book_year->title);
-            printf("%s\t",book_year->authors);
-            printf("%d\t",book_year->year);
-            printf("%d\t\n",book_year->copies);
+            printf("%-*d    ",ID_len,book_year->id);
+            printf("%-*s    ",title_len,book_year->title);
+            printf("%-*s    ",authors_len,book_year->authors);
+            printf("%-4d    ",book_year->year);
+            printf("%d    \n",book_year->copies);
         }
         book_year = book_year->next;
     }
