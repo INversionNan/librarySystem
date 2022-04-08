@@ -92,10 +92,10 @@ int main(int argc, char ** argv) {
                 break;
             }
             memset(info, '\0',sizeof info);
-            b = 0;
+            c = 0;
         }
         d++;
-    }
+    }//Command line parameter operation initialize
 
     if(!book_file){
         printf("\nPlease enter a valid book filename which should end with .txt: ");
@@ -119,7 +119,7 @@ int main(int argc, char ** argv) {
                 printf("\nPlease re-enter a valid book filename which should end with .txt: ");
             }
         }
-    }
+    }//Command line parameter operation on book file
 
     if(!user_file){
         printf("\nPlease enter a valid user filename which should end with .txt: ");
@@ -140,7 +140,7 @@ int main(int argc, char ** argv) {
                 printf("\nPlease re-enter a valid user filename which should end with .txt: ");
             }
         }
-    }
+    }//Command line parameter operation on user file
 
 
     Book_h = (Book *)malloc(sizeof (Book));
@@ -150,34 +150,7 @@ int main(int argc, char ** argv) {
     Book_h ->next = Book_load();
     User_h->next = User_load();
     Lib_h->next = Lib_load();
-
-//    while(1){
-//        printf("%s\n",User_h->user_name);
-//        printf("%s\n",User_h->user_pass);
-//        User_h = User_h->next;
-//        if(!User_h){
-//
-//            break;
-//        }
-//    }
-//    file = fopen("books.txt","w+");
-//    store_books(file);
-//    load_books(file);
-//    fclose(file);
-
-
-
-//    char lib_n[10] = "librarian";
-//    char lib_password[10] = "librarian";
-//    char lib_a[10] = "0";
-//
-
-//    fprintf(lib,"%s\t", lib_n);
-//    fprintf(lib,"%s\t", lib_password);
-//    fprintf(lib,"%s\t", lib_a);
-//    fclose(lib);
-
-//
+    //Get the head node
     char a = '1';
     welcome();
     while(a != '5'){

@@ -14,7 +14,7 @@ User *repeat(char *a,char *b){
         user_p1 = user_p1->next;
     }
     return NULL;
-}
+}//Check the book repeated
 
 void reg(){
     int i;
@@ -63,7 +63,7 @@ void reg(){
     }
     p->next = new;
     user_save();
-}
+}//Register a new user
 
 User *compare_name(char *login){
     User *p=User_h->next;
@@ -89,7 +89,7 @@ Book *exist(int Book_id){
         Book_p = Book_p->next;
     }
     return Book_p;
-}
+}//check the book whether exist  or not by its ID
 
 Book *exist_title(char *Book_title, char *Book_author){
     Book *Book_q = Book_h->next;
@@ -100,7 +100,7 @@ Book *exist_title(char *Book_title, char *Book_author){
         Book_q = Book_q->next;
     }
     return Book_q;
-}
+}//check the book whether exist or not by title and author
 
 void login(){
     Book book, book_1;
@@ -208,7 +208,7 @@ void login(){
             }
         }
     }
-}
+}//Log option menu for librarian and users
 
 User *User_load(){
     FILE *file;
@@ -245,7 +245,7 @@ User *User_load(){
     }
     fclose(file);
     return h;
-}
+}//Load the user information to the linked list
 
 
 void display(){
@@ -285,7 +285,7 @@ void display(){
         printf("%-*d    %-*s    %-*s    %-4d    %d\n",ID_len,p1->id, title_len,p1->title,authors_len, p1->authors, p1->year, p1->copies);
         p1 = p1->next;
     }
-}
+}//display all books
 
 int judge(User *user_bo, char *Book_borrow){
     int judge_count = 0;
@@ -297,7 +297,7 @@ int judge(User *user_bo, char *Book_borrow){
         }
     }
     return judge_count;
-}
+}//judge the user's borrow book in user list
 
 int find_title(char *title,char *author){
     int id_num;
@@ -309,7 +309,7 @@ int find_title(char *title,char *author){
         book_find = book_find->next;
     }
     return id_num;
-}
+}//judge the borrow book's title and author in book list
 int judge_Id(User *user_bo, int Book_borrowId){
     int judge_count = 0;
     int i;
@@ -320,7 +320,7 @@ int judge_Id(User *user_bo, int Book_borrowId){
         }
     }
     return judge_count;
-}
+}// judge the borrow book's ID in book list
 
 
 void borrow(User *user_bo){
@@ -339,7 +339,7 @@ void borrow(User *user_bo){
             if(user_bo->user_bor[i] != 0){
                 cot++;
             }
-        }
+        }//calculate the number of borrowed book
         if(cot == 10){
             printf("You have borrowed ten books, which is the maximum.\n");
             printf("Please return the borrowed books first.\n\n");
@@ -367,7 +367,7 @@ void borrow(User *user_bo){
                 fflush(stdin);
                 while(1){
                     int count_5 = 0;
-                    scanf("%c",&numborrow);
+                    scanf("%d",&numborrow);
                     while(getchar()!='\n') count_5 ++;
                     if(count_5 > 3){
                         printf("Sorry, the option you enter was invalid, please try again.\n");
@@ -400,7 +400,7 @@ void borrow(User *user_bo){
                         break;
                     }
                 }
-                printf("You have borrowed it successfully!\n\n");
+                printf("\nYou have borrowed it successfully!\n");
                 book_save();
                 user_save();
                 cot = 0;
@@ -457,7 +457,7 @@ void borrow(User *user_bo){
                         break;
                     }
                 }
-                printf("You have borrowed it successfully!\n\n");
+                printf("\nYou have borrowed it successfully!\n");
                 book_save();
                 user_save();
                 cot = 0;
@@ -468,8 +468,7 @@ void borrow(User *user_bo){
                 break;
         }
     }
-
-}
+}//Borrow books by ID or Title and authors
 
 void display_borrow(User *user_re){
     int i;
@@ -512,7 +511,7 @@ void display_borrow(User *user_re){
         }
         p3 = p3->next;
     }
-}
+}//display borrowed books
 
 void return_book(User *user_re){
     display_borrow(user_re);
@@ -538,9 +537,9 @@ void return_book(User *user_re){
     printf("\nPlease enter the ID number of the book you want to return:\n");
     while(1){
         int count_6 = 0;
-        scanf("%c",&num_return);
+        scanf("%d",&num_return);
         while(getchar()!='\n') count_6 ++;
-        if(count_6 > 0){
+        if(count_6 > 3){
             printf("Sorry, the option you enter was invalid, please try again.\n");
             continue;
         }else{
@@ -792,4 +791,4 @@ void search(){
                 break;
         }
     }
-}
+}// search option menu

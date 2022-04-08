@@ -43,7 +43,7 @@ void user_save(){
     }
     fprintf(file,"%s",user_p->user_bor_book[9]);
     fclose(file);
-}
+}//Store the user information in the user linked list in a file
 
 void book_save(){
     FILE *file;
@@ -101,7 +101,7 @@ void book_save(){
     fprintf(file, "%d ", book_p->year);
     fprintf(file, "%d", book_p->copies);
     fclose(file);
-}
+}//Store the book information in the book linked list in a file
 
 void lib_save(){
     FILE *file;
@@ -122,7 +122,7 @@ void lib_save(){
         fprintf(file,"%s\n", lib_a);
     }
     fclose(file);
-}
+}//Store the information in the librarian linked list in a file
 
 void Save(){
     book_save();
@@ -130,4 +130,4 @@ void Save(){
     lib_save();
     goodbye();
     exit(0);
-}
+}//Save all the information and show the goodbye menu

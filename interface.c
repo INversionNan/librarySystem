@@ -3,14 +3,6 @@
 
 
 void welcome(){
-//    int libraryOpen = 1;
-//    int option;
-//
-//    while () {
-//        printf("*************************Welcome to the JJY Library*************************\n");
-//        printf("-------------------------------------\n");
-//        printf("\n Main menu options(Please choose your option)\n 1 User login\n 2 Librarian login\n 3 Exit system\n Choice:");
-//    }
     printf("*************************Welcome to the JJY Library.*************************\n\n");
 }
 

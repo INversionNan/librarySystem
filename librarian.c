@@ -57,7 +57,7 @@ int store_books(FILE *file) {
     fprintf(file, "%d", book_p->copies);
     fclose(file);
     return 0;
-}
+}//Store the book information in the book linked list in a file
 
 int load_books(FILE *file){
     int i ,j ,m;
@@ -111,7 +111,7 @@ int load_books(FILE *file){
     fclose(file);
     i = 1;
     return i;
-}
+}//Load the book information to the linked list
 
 Book *repeated(char *a ,char *b, unsigned int c){
     Book *book_p1 = Book_h->next;
@@ -123,7 +123,7 @@ Book *repeated(char *a ,char *b, unsigned int c){
         book_p1 = book_p1->next;
     }
     return NULL;
-}
+}//Check the repeated book
 
 int add_book(Book book){
     FILE  *file = fopen("books.txt","w+");
@@ -266,7 +266,7 @@ int add_book(Book book){
         }
     }
     return 1;
-}
+}//Add new books and add books stock.
 
 int remove_book(Book book){
     int i;
@@ -303,7 +303,7 @@ int remove_book(Book book){
     printf("\nYou have deleted this book successfully!\n");
     book_save();
     return 0;
-}
+}//Remove books by ID
 
 Librarian *Lib_load(){
     FILE *file;
@@ -337,4 +337,4 @@ Librarian *Lib_load(){
     }
     fclose(file);
     return q;
-}
+}//Load the librarian information to the linked list
