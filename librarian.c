@@ -150,7 +150,7 @@ int add_book(Book book){
             scanf("%c",&addb);
             while(getchar()!='\n') count_3 ++;
             if(count_3 > 0){
-                printf("Sorry, the option you enter was invalid, please try again.\n");
+                printf("\nSorry, the option you enter was invalid, please try again.\n");
                 continue;
             }else{
                 break;
@@ -185,7 +185,7 @@ int add_book(Book book){
                 }
 
                 if(repeated(book.title,book.authors,book.year)){
-                    printf("This book has already existed, so no new book can be added\n");
+                    printf("\nThis book has already existed, so no new book can be added\n");
                     printf("If you want to add it, please choose option 2.\n");
                     free(add);
                     break;
@@ -213,7 +213,7 @@ int add_book(Book book){
                     book_p3 = book_p3->next;
                 }
                 book_save();
-                printf("You have added this book successfully.\n");
+                printf("\nYou have added this book successfully.\n");
                 //store_books(file);
                 break;
             case '2':
@@ -256,12 +256,12 @@ int add_book(Book book){
                 book_p4->copies += book.copies;
 
                 store_books(file);
-                printf("You have added the copies of this book successfully.\n");
+                printf("\nYou have added the copies of this book successfully.\n");
                 break;
 
             case '3':break;
             default:
-                printf("Sorry, the option you enter was invalid, please try again.\n");
+                printf("\nSorry, the option you enter was invalid, please try again.\n");
                 break;
         }
     }
@@ -338,3 +338,152 @@ Librarian *Lib_load(){
     fclose(file);
     return q;
 }//Load the librarian information to the linked list
+
+void Lib_Manage(){
+    char lib_1 = '1';
+    while(lib_1 != '4'){
+        while (1){
+            lib_choice();
+            printf("Option:");
+            int count = 0;
+            scanf("%c",&lib_1);
+            while(getchar()!='\n') count ++;
+            if(count > 0){
+                printf("\nSorry, the option you enter was invalid, please try again.\n\n");
+                continue;
+            }else{
+                break;
+            }
+        }
+        switch (lib_1) {
+            case '1':Lib_Display(); break;
+            case '2':Lib_return(); break;
+            case '3':Lib_delete(); break;
+            case '4': break;
+            default:
+                printf("\nSorry, the option you enter was invalid, please try again.\n");
+                break;
+        }
+    }
+}
+void Lib_Display(){
+    User *user = User_h->next;
+    int i ,len_username = 8, len_ID = 2, len_pass = 8;
+    if(!user){
+        printf("\nSorry,no user has registered for the time being.\n");
+        return;
+    }
+    while (user){
+            if (strlen(user->user_name) > len_username) {
+                len_username = strlen(user->user_name);
+            }
+            if (strlen(user->user_num) > len_ID) {
+                len_ID = strlen(user->user_num);
+            }
+            if (strlen(user->user_pass) > len_pass) {
+                len_pass = strlen(user->user_pass);
+            }
+        user = user->next;
+    }
+    printf("%-*s    ",len_username,"Username");
+    printf("%-*s    ",len_ID,"ID");
+    printf("%-*s    ",len_pass,"Password");
+    printf("%s","Borrowed books number");
+    printf("\n");
+    User *user_1 = User_h->next;
+    int cot = 0;
+    while (user_1){
+        for(i = 0; i < 10 ; i++){
+            if(user_1->user_bor[i] != 0){
+                cot++;
+            }
+        }
+        printf("%-*s    %-*s    %-*s    %-4d\n",len_username,user_1->user_name, len_ID, user_1->user_num,len_pass, user_1->user_pass, cot);
+        user_1 = user_1->next;
+        cot = 0;
+    }
+}
+
+User *exist_user(char *user_id){
+    User *p = User_h->next;
+    while (p){
+        if(strcmp(p->user_num,user_id) == 0){
+            break;
+        }
+        p = p->next;
+    }
+    return p;
+}
+
+void Lib_return(){
+    char id[20];
+    Book *re;
+    User *user_return;
+    Lib_Display();
+    printf("\nPlease enter the ID of the user you wish forcibly returned books:");
+    gets(id);
+    user_return = exist_user(id);
+    if(!user_return){
+        printf("\nSorry,the student does not exist.\n");
+        return;
+    }
+    int i, cot = 0;
+    for (i = 0; i < 10; i++) {
+        if(user_return->user_bor[i] != 0){
+            cot++;
+        }
+    }
+    if(cot == 0){
+        printf("\nSorry, the student does not borrow any book.\n");
+        return;
+    }
+    for(i = 0;i < 10; i++){
+        if(user_return->user_bor[i] != 0){
+            re = exist(user_return->user_bor[i]);
+            re->copies++;
+            user_return->user_bor[i] = 0;
+        }
+        if(strcmp(user_return->user_bor_book[i],"0") != 0){
+            user_return->user_bor_book[i][0] = '0';
+            user_return->user_bor_book[i][1] = '\0';
+        }
+    }
+    user_save();
+    book_save();
+    printf("\nYou have forced book return successfully.\n");
+}
+
+void Lib_delete(){
+    User *user_delete;
+    User *head = User_h;
+    Book *p;
+    int i;
+    char id_1[20];
+    Lib_Display();
+    printf("\nPlease enter the ID number of the student you wish to deleter:");
+    gets(id_1);
+    user_delete = exist_user(id_1);
+    if(!user_delete){
+        printf("\nSorry,the student does not exist.\n");
+        return;
+    }
+    for(i = 0; i < 10; i ++){
+        if(user_delete->user_bor[i] != 0){
+            p = exist(user_delete->user_bor[i]);
+            p->copies++;
+        }
+    }
+    User *user_de = User_h->next;
+    while (user_de){
+        if(strcmp(id_1, user_de->user_num) == 0){
+            head->next = user_de->next;
+            free(user_de);
+            break;
+        }
+        head = user_de;
+        user_de = user_de->next;
+    }
+    user_save();
+    book_save();
+    printf("\nYou succeeded to delete this student.\n");
+}

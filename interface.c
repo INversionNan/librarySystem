@@ -3,7 +3,7 @@
 
 
 void welcome(){
-    printf("*************************Welcome to the JJY Library.*************************\n\n");
+    printf("\n*************************Welcome to the JJY Library*************************\n");
 }
 
 void menu(){
@@ -31,7 +31,8 @@ void li_choice(){
     printf("2)Remove a book\n");
     printf("3)Search for books\n");
     printf("4)Display all books\n");
-    printf("5)Log out\n\n");
+    printf("5)Manage users\n");
+    printf("6)Log out\n\n");
 }
 
 void add_choice(){
@@ -62,3 +63,11 @@ void goodbye(){
     printf("Goodbye~\n");
 }
 
+void lib_choice(){
+    printf("\nPlease choose an option:\n\n");
+    printf("1)Display the user list\n");
+    printf("2)Force user to return books\n");
+    printf("3)Delete user numbers and return all books\n");
+    printf("4)Quit\n");
+    printf("Option:");
+}

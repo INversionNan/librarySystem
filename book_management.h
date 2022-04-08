@@ -148,6 +148,18 @@ Book *repeated(char *a ,char *b, unsigned int c);
 
 int find_title(char *title,char *author);
 
+void lib_choice();
+
+void Lib_Manage();
+
+void Lib_Display();
+
+void Lib_return();
+
+void Lib_delete();
+
+User *exist_user(char *user_id);
+
 Book *Book_h;
 User *User_h;
 Librarian *Lib_h;

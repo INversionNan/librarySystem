@@ -52,7 +52,7 @@ int check(char *password){
         }else{
             m++;
             if(m!=3){
-                printf("The two passwords are inconsistent. Please re-enter the password for %d times:",3-m);
+                printf("\nThe two passwords are inconsistent. Please re-enter the password for %d times:",3-m);
             } else if(m == 3){
                 printf("\nYour password is wrong!\n");
             }
@@ -72,7 +72,7 @@ int verify(char *password){
             break;
         } else{
             count++;
-            printf("Wrong password. Please re-enter the password for %d times ", 3-count);
+            printf("\nWrong password. Please re-enter the password for %d times ", 3-count);
         }
     }
     return verify_num;

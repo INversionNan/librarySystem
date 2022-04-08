@@ -161,7 +161,7 @@ int main(int argc, char ** argv) {
             scanf("%c",&a);
             while(getchar()!='\n') count ++;
             if(count > 0){
-                printf("Sorry, the option you enter was invalid, please try again.\n\n");
+                printf("\nSorry, the option you enter was invalid, please try again.\n\n");
                 continue;
             }else{
                 break;
@@ -170,11 +170,13 @@ int main(int argc, char ** argv) {
         switch (a) {
             case '1':reg(); break;
             case '2':login(); break;
-            case '3':search(); break;
+            case '3':
+                printf("\nLoading search menu...\n\n");
+                search(); break;
             case '4':display(); break;
             case '5':Save();break;
             default:
-                printf("Sorry, the option you enter was invalid, please try again.\n");
+                printf("\nSorry, the option you enter was invalid, please try again.\n");
                 break;
         }
     }

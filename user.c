@@ -52,7 +52,7 @@ void reg(){
     password_input(new->user_pass);
     printf("To verify your password, please enter it again:");
     if(check(new->user_pass) == 0){
-        printf("Because you have entered wrong number for 3 times, exit the registration system.");
+        printf("\nBecause you have entered wrong number for 3 times, exit the registration system.");
         free(new);
         return;
     }
@@ -117,16 +117,15 @@ void login(){
             printf("\nSorry, it is a wrong username.\n");
         }
         else if(strcmp(lib, login_name) == 0){
+            login_user = Lib_h->next;
             printf("Please enter your password:");
-            strcpy(login_user->user_pass,Lib_h->next->lib_pass);
-//            login_user = Lib_h->next;
             if(verify(login_user->user_pass) == 0){
-                printf("You have entered three errors in a row and will exit the program.\n\n");
+                printf("\nYou have entered three errors in a row and will exit the program.\n\n");
                 return;
             }
 
             char op_1 = 1;
-            while(op_1 != '5'){
+            while(op_1 != '6'){
                 while (1){
                     int count = 0;
                     li_choice();
@@ -134,7 +133,7 @@ void login(){
                     scanf("%c", &op_1);
                     while(getchar()!='\n') count++;
                     if(count > 0){
-                        printf("Wrong input, please re-enter again.\n");
+                        printf("\nWrong input, please re-enter again.\n");
                         continue;
                     }else{
                         break;
@@ -162,20 +161,23 @@ void login(){
                         book_1.id = atoi(p_ID);
                         remove_book(book_1);
                         fflush(stdin);break;
-                    case '3':search();break;
+                    case '3':
+                        printf("\nLoading search menu...\n\n");
+                        search();break;
                     case '4':display();break;
-                    case '5':
+                    case '5':Lib_Manage();break;
+                    case '6':
                         printf("\nLogging out...\n");
                         return;
                     default:
-                        printf("Wrong input, please re-enter again.\n");break;
+                        printf("\nWrong input, please re-enter again.\n");break;
                 }
             }
         }
         else{
             printf("Please enter your password:");
             if(verify(login_user->user_pass) == 0){
-                printf("You have entered three errors in a row and will exit the program.\n\n");
+                printf("\nYou have entered three errors in a row and will exit the program.\n\n");
                 return;
             }
             printf("\n(logged in %s)\n\n",login_name);
@@ -188,7 +190,7 @@ void login(){
                     scanf("%c", &op);
                     while(getchar()!='\n') count_1++;
                     if(count_1 > 0){
-                        printf("Wrong input, please re-enter again.\n");
+                        printf("\nWrong input, please re-enter again.\n");
                         continue;
                     }else{
                         break;
@@ -197,13 +199,15 @@ void login(){
                 switch (op) {
                     case '1':borrow(login_user);break;
                     case '2':return_book(login_user);break;
-                    case '3':search();break;
+                    case '3':
+                        printf("\nLoading search menu...\n\n");
+                        search();break;
                     case '4':display();break;
                     case '5':
                         printf("\nLogging out...\n");
                         return;
                     default:
-                        printf("Wrong input, please re-enter again.\n");break;
+                        printf("\nWrong input, please re-enter again.\n");break;
                 }
             }
         }
@@ -341,7 +345,7 @@ void borrow(User *user_bo){
             }
         }//calculate the number of borrowed book
         if(cot == 10){
-            printf("You have borrowed ten books, which is the maximum.\n");
+            printf("\nYou have borrowed ten books, which is the maximum.\n");
             printf("Please return the borrowed books first.\n\n");
             return;
         }
@@ -351,7 +355,7 @@ void borrow(User *user_bo){
             scanf("%c",&borrow_option);
             while(getchar()!='\n') count_4 ++;
             if(count_4 > 0){
-                printf("Sorry, the option you enter was invalid, please try again.\n");
+                printf("\nSorry, the option you enter was invalid, please try again.\n");
                 continue;
             }else{
                 break;
@@ -370,7 +374,7 @@ void borrow(User *user_bo){
                     scanf("%d",&numborrow);
                     while(getchar()!='\n') count_5 ++;
                     if(count_5 > 3){
-                        printf("Sorry, the option you enter was invalid, please try again.\n");
+                        printf("\nSorry, the option you enter was invalid, please try again.\n");
                         continue;
                     }else{
                         break;
@@ -378,17 +382,17 @@ void borrow(User *user_bo){
                 }
                 borrow = exist(numborrow);
                 if(!borrow){
-                    printf("Sorry ,the library does not have this book.\n");
+                    printf("\nSorry ,the library does not have this book.\n");
                     printf("You failed to borrow it.\n");
                     break;
                 }
                 if(borrow->copies == 0){
-                    printf("Sorry, this book is out of stock.\n");
+                    printf("\nSorry, this book is out of stock.\n");
                     printf("You failed to borrow it.\n");
                     break;
                 }
                 if(judge_Id(user_bo,numborrow)){
-                    printf("Sorry, you have borrowed it before.\n");
+                    printf("\nSorry, you have borrowed it before.\n");
                     printf("Do not borrow it again.\n");
                     printf("You failed to borrow it.\n\n");
                     break;
@@ -416,13 +420,13 @@ void borrow(User *user_bo){
                 gets(borrow_author);
                 borrow = exist_title(borrow_title,borrow_author);
                 if(!borrow){
-                    printf("Sorry ,the library does not have this book.\n ");
+                    printf("\nSorry ,the library does not have this book.\n ");
                     printf("You failed to borrow it.\n");
                     free(borrow_title);
                     break;
                 }
                 if(borrow->copies == 0){
-                    printf("Sorry, this book is out of stock.\n");
+                    printf("\nSorry, this book is out of stock.\n");
                     printf("You failed to borrow it.\n");
                     free(borrow_title);
                     break;
@@ -436,7 +440,7 @@ void borrow(User *user_bo){
                     }
                 }
                 if(judge(user_bo,borrow_title) || judge_Id(user_bo,id_num)){
-                    printf("Sorry, you have borrowed it before.\n");
+                    printf("\nSorry, you have borrowed it before.\n");
                     printf("Do not borrow it again.\n");
                     printf("You failed to borrow it.\n\n");
                     free(borrow_title);
@@ -464,7 +468,7 @@ void borrow(User *user_bo){
                 break;
             case '3':break;
             default:
-                printf("Sorry, the option you enter was invalid, please try again.\n");
+                printf("\nSorry, the option you enter was invalid, please try again.\n");
                 break;
         }
     }
@@ -514,7 +518,6 @@ void display_borrow(User *user_re){
 }//display borrowed books
 
 void return_book(User *user_re){
-    display_borrow(user_re);
     int i;
     int num_return;
     int cot_1 = 0;
@@ -531,16 +534,17 @@ void return_book(User *user_re){
         break;
     }
     if(cot_1 == 0){
-        printf("You should not return one book because no book are borrowed by you.\n");
+        printf("\nYou should not return one book because no book are borrowed by you.\n\n");
         return;
     }
+    display_borrow(user_re);
     printf("\nPlease enter the ID number of the book you want to return:\n");
     while(1){
         int count_6 = 0;
         scanf("%d",&num_return);
         while(getchar()!='\n') count_6 ++;
         if(count_6 > 3){
-            printf("Sorry, the option you enter was invalid, please try again.\n");
+            printf("\nSorry, the option you enter was invalid, please try again.\n");
             continue;
         }else{
             break;
@@ -553,7 +557,7 @@ void return_book(User *user_re){
         }
     }
     if(cot_2 == 0){
-        printf("Sorry, you have not borrowed this book.\n");
+        printf("\nSorry, you have not borrowed this book.\n");
         printf("Your enter is wrong.\n");
         return;
     }
@@ -574,17 +578,16 @@ void return_book(User *user_re){
         book_return = book_return->next;
     }
     book_return->copies++;
-    printf("You have returned it successfully!\n\n");
+    printf("\nYou have returned it successfully!\n\n");
     book_save();
 }
 
 BookList find_book_by_title (const char *title){
     BookList list_title;
     int title_num = 0;
-    int i, a, len, ID_len = 2, title_len = 5, authors_len = 7;;
+    int a, len, ID_len = 2, title_len = 5, authors_len = 7;;
     Book *p5 = Book_h->next;
     while (p5) {
-        for (i = 0; i < 10; i++) {
             len = 0;
             a = p5->id;
             while (a > 0) {
@@ -600,14 +603,13 @@ BookList find_book_by_title (const char *title){
             if (strlen(p5->authors) > authors_len) {
                 authors_len = strlen(p5->authors);
             }
-        }
         p5 = p5->next;
     }
     Book *book_title = Book_h->next;
     while (1){
         if(!book_title){
             if(title_num == 0){
-                printf("Sorry, there are no books which are called as this title in the library.\n\n");
+                printf("\nSorry, there are no books which are called as this title in the library.\n\n");
                 break;
             }
             break;
@@ -637,10 +639,9 @@ BookList find_book_by_title (const char *title){
 BookList find_book_by_author (const char *author){
     BookList list_author;
     int author_num = 0;
-    int i, a, len, ID_len = 2, title_len = 5, authors_len = 7;;
+    int a, len, ID_len = 2, title_len = 5, authors_len = 7;;
     Book *p6 = Book_h->next;
     while (p6) {
-        for (i = 0; i < 10; i++) {
             len = 0;
             a = p6->id;
             while (a > 0) {
@@ -656,14 +657,13 @@ BookList find_book_by_author (const char *author){
             if (strlen(p6->authors) > authors_len) {
                 authors_len = strlen(p6->authors);
             }
-        }
         p6 = p6->next;
     }
     Book *book_author = Book_h->next;
     while (1){
         if(!book_author){
             if(author_num == 0){
-                printf("Sorry, there are no books which are called as this author(these authors) in the library.\n\n");
+                printf("\nSorry, there are no books which are called as this author(these authors) in the library.\n\n");
                 break;
             }
             break;
@@ -693,10 +693,9 @@ BookList find_book_by_author (const char *author){
 BookList find_book_by_year (unsigned int year){
     BookList list_year;
     int year_num = 0;
-    int i, a, len, ID_len = 2, title_len = 5, authors_len = 7;;
+    int a, len, ID_len = 2, title_len = 5, authors_len = 7;;
     Book *p7 = Book_h->next;
     while (p7) {
-        for (i = 0; i < 10; i++) {
             len = 0;
             a = p7->id;
             while (a > 0) {
@@ -712,14 +711,13 @@ BookList find_book_by_year (unsigned int year){
             if (strlen(p7->authors) > authors_len) {
                 authors_len = strlen(p7->authors);
             }
-        }
         p7 = p7->next;
     }
     Book *book_year = Book_h->next;
     while (1){
         if(!book_year){
             if(year_num == 0){
-                printf("Sorry, there are no books which are called as this year in the library.\n\n");
+                printf("\nSorry, there are no books which are called as this year in the library.\n\n");
                 break;
             }
             break;
@@ -758,7 +756,7 @@ void search(){
             scanf("%c",&book_search);
             while (getchar()!='\n') count_2 ++;
             if(count_2 > 0){
-                printf("Sorry, the option you enter was invalid, please try again.\n");
+                printf("\nSorry, the option you enter was invalid, please try again.\n");
                 continue;
             } else{
                 break;
@@ -787,7 +785,7 @@ void search(){
             case '4':
                 break;
             default:
-                printf("Sorry, the option you enter was invalid, please try again.\n");
+                printf("\nSorry, the option you enter was invalid, please try again.\n");
                 break;
         }
     }
