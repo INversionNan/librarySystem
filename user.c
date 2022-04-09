@@ -453,7 +453,7 @@ void borrow(User *user_bo){
                 printf("\n\nYou have already borrowed %d books, and you can borrow %d more books.\n",cot, 10-cot);
                 printf("Please enter the title of the book you want to borrow:\n");
                 fflush(stdin);
-                fgets(borrow_title,50,stdin);
+                fgets(borrow_title,100,stdin);
                 for(i = 0; borrow_title[i] != '\n' && i < strlen(borrow_title); i++);
                 if(i == strlen(borrow_title)) while(getchar()!='\n');
                 for(i = 0; i < strlen(borrow_title); i ++){
@@ -464,7 +464,7 @@ void borrow(User *user_bo){
                 }
                 printf("Please enter the authors of the book you want to borrow:\n");
                 fflush(stdin);
-                fgets(borrow_author,50,stdin);
+                fgets(borrow_author,100,stdin);
                 for(i = 0; borrow_author[i] != '\n' && i < strlen(borrow_author); i++);
                 if(i == strlen(borrow_author)) while(getchar()!='\n');
                 for(i = 0; i < strlen(borrow_author); i ++){
@@ -822,7 +822,7 @@ void search(){
             case '1':
                 search_title = (char *) malloc(150);
                 printf("Please enter the title you want to search:\n");
-                fgets(search_title,50,stdin);
+                fgets(search_title,100,stdin);
                 for(i = 0; search_title[i] != '\n' && i < strlen(search_title); i++);
                 if(i == strlen(search_title)) while(getchar()!='\n');
                 for(i = 0; i < strlen(search_title); i ++){
@@ -836,7 +836,7 @@ void search(){
             case '2':
                 search_authors = (char *) malloc(150);
                 printf("Please enter the authors you want to search:\n");
-                fgets(search_authors,50,stdin);
+                fgets(search_authors,100,stdin);
                 for(i = 0; search_authors[i] != '\n' && i < strlen(search_authors); i++);
                 if(i == strlen(search_authors)) while(getchar()!='\n');
                 for(i = 0; i < strlen(search_authors); i ++){

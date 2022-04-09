@@ -163,7 +163,7 @@ int add_book(Book book){
                 display();
                 while(j == 0){
                     printf("\nEnter the title of the book you wish to add:\n");
-                    fgets(t,50,stdin);
+                    fgets(t,100,stdin);
                     for(i = 0; t[i] != '\n' && i < strlen(t); i++);
                     if(i == strlen(t)) while(getchar()!='\n');
                     for(i = 0; i < strlen(t); i ++){
@@ -172,8 +172,8 @@ int add_book(Book book){
                             break;
                         }
                     }
-                    if(strlen(t) > 40){
-                        printf("\nYour title is too long, please enter title again which should keep under 40 words\n");
+                    if(strlen(t) > 90){
+                        printf("\nYour title is too long, please enter title again which should keep under 90 words\n");
                         continue;
                     }
                     //book.title = (char *) malloc(150);
@@ -184,7 +184,7 @@ int add_book(Book book){
 
                 while (j == 0){
                     printf("Enter the author of the book you wish to add:\n");
-                    fgets(t,50,stdin);
+                    fgets(t,100,stdin);
                     for(i = 0; t[i] != '\n' && i < strlen(t); i++);
                     if(i == strlen(t)) while(getchar()!='\n');
                     for(i = 0; i < strlen(t); i ++){
@@ -193,8 +193,8 @@ int add_book(Book book){
                             break;
                         }
                     }
-                    if(strlen(t) > 40){
-                        printf("\nYour authors are too long, please enter authors again which should keep under 40 words\n");
+                    if(strlen(t) > 90){
+                        printf("\nYour authors are too long, please enter authors again which should keep under 90 words\n");
                         continue;
                     }
                    // book.authors = (char *) malloc(150);
@@ -304,7 +304,7 @@ int add_book(Book book){
                 display();
                 printf("\nEnter the title of the book you wish to add:\n");
                 fflush(stdin);
-                fgets(p,50,stdin);
+                fgets(p,100,stdin);
                 for(i = 0; p[i] != '\n' && i < strlen(p); i++);
                 if(i == strlen(p)) while(getchar()!='\n');
                 for(i = 0; i < strlen(p); i ++){
@@ -318,7 +318,7 @@ int add_book(Book book){
 
                 printf("Enter the author of the book you wish to add:\n");
                 fflush(stdin);
-                fgets(p,50,stdin);
+                fgets(p,100,stdin);
                 for(i = 0; p[i] != '\n' && i < strlen(p); i++);
                 if(i == strlen(p)) while(getchar()!='\n');
                 for(i = 0; i < strlen(p); i ++){
