@@ -1,6 +1,11 @@
 # librarySystem
 https://github.com/INversionNan/librarySystem
-![{HLMWO3CVE Y01EJ9{0P7VE](https://user-images.githubusercontent.com/102014220/162350829-b09badaf-2f55-485e-bc87-29e3d4289f50.png)
-![}672BEPHWW3566DTB~5ENIL](https://user-images.githubusercontent.com/102014220/162354586-0f2a4216-331a-4bf5-aa71-964e1af331cf.png)
-![G31EKB3J@L6G%R5E9E`(A0E](https://user-images.githubusercontent.com/102014220/162351025-70490204-7d14-47d0-b1af-f03d29909fd4.png)
-![74WD)8JR7}K987F59C0){}E](https://user-images.githubusercontent.com/102014220/162354596-e475ee72-5c75-452c-99b8-64ed33ce1dbb.png)
+https://gitee.com/chen-yijunEason/library
+![EF2$BDBB@$VI8@T`A_$R$A](https://user-images.githubusercontent.com/102014220/162382893-a1e4a3f3-8c63-4fd9-8bc6-74c65af9cb5e.png)
+![QUPRX_{9SE0QJL4BEN WMYH](https://user-images.githubusercontent.com/102014220/162382905-ae730f17-c6ad-4fad-b289-f454c758ab7b.png)
+book_management.c: Implement all books operations and main functions
+interface.c: interface menu
+user.c: Implement all user operations
+librarian.c:Implement all librarian operations
+password.c:Implement password input and verify(check)
+save.c: save information and read information
