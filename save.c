@@ -9,7 +9,6 @@ void user_save(){
     int i,j;
     FILE *file;
     User *user_p = User_h->next;
-
     if(!user_p){
         return;
     }
@@ -60,8 +59,8 @@ void book_save(){
         exit(1);
     }
     while (book_p->next){
-        t->title = (char *) malloc(sizeof (t->title));
-        t->authors = (char *) malloc(sizeof (t->authors));
+        t->title = (char *) malloc(150);
+        t->authors = (char *) malloc(150);
         strcpy(t->title,book_p->title);
         strcpy(t->authors,book_p->authors);
         for(i = 0; i < strlen(t->title); i++){
@@ -81,8 +80,8 @@ void book_save(){
         fprintf(file, "%d\n", book_p->copies);
         book_p = book_p->next;
     }
-    p->title = (char *) malloc(300 * sizeof (char));
-    p->authors = (char *) malloc(300 * sizeof (char));
+    p->title = (char *) malloc(150);
+    p->authors = (char *) malloc(150);
     strcpy(p->title,book_p->title);
     strcpy(p->authors,book_p->authors);
     for(i = 0; i < strlen(p->title); i++){

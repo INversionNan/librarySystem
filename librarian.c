@@ -14,8 +14,8 @@ int store_books(FILE *file) {
     book_p = book_p->next;
     p = (Book *) malloc(sizeof (Book));
     while (book_p->next){
-        p->title = (char *) malloc(300 * sizeof (char));
-        p->authors = (char *) malloc(300 * sizeof (char));
+        p->title = (char *) malloc(150);
+        p->authors = (char *) malloc(150);
         strcpy(p->title,book_p->title);
         strcpy(p->authors,book_p->authors);
         for(i = 0; i < strlen(p->title); i++){
@@ -36,8 +36,8 @@ int store_books(FILE *file) {
         book_p = book_p->next;
     }
     t = (Book *) malloc(sizeof (Book));
-    t->title = (char *) malloc(300 * sizeof (char));
-    t->authors = (char *) malloc(300 * sizeof (char));
+    t->title = (char *) malloc(150);
+    t->authors = (char *) malloc(150);
     strcpy(t->title,book_p->title);
     strcpy(t->authors,book_p->authors);
     for(i = 0; i < strlen(t->title); i++){
@@ -64,7 +64,7 @@ int load_books(FILE *file){
     Book *k=NULL;
     Book *t = k;
     Book *a;
-    char *num;
+    //char *num;
     if(file == NULL){
         printf("Failed to open books file.\n");
         return -1;
@@ -83,8 +83,8 @@ int load_books(FILE *file){
     while(!feof(file)){
         a=(Book *)malloc(sizeof(Book));
         a->next=NULL;
-        a->title = (char *)malloc(300 * sizeof (char));
-        a->authors = (char *)malloc(300 * sizeof (char));
+        a->title = (char *)malloc(150);
+        a->authors = (char *)malloc(150);
         fscanf(file,"%d",&a->id);
         fscanf(file,"%s",a->title);
         for(j = 0; j < strlen(a->title); j++){
@@ -129,19 +129,21 @@ int add_book(Book book){
     FILE  *file = fopen("books.txt","w+");
     char addb = '1';
     char *t, *p;
-    p = (char *) malloc(300 * sizeof (char ));
-    t = (char *) malloc(300 * sizeof (char ));
+    int a, i;
+    int j = 0;
+    p = (char *) malloc(150);
+    t = (char *) malloc(150);
 
     while(addb != '3'){
         Book *book_p3, *book_p4;
         book_p3 = Book_h;
         Book *add = (Book *) malloc(sizeof (Book));
-        add->title = (char *) malloc(sizeof (add->title));
-        add->authors = (char *)malloc(sizeof (add->authors));
+        add->title = (char *) malloc(150);
+        add->authors = (char *)malloc(150);
         add->next = NULL;
         Book *add_1 = (Book *) malloc(sizeof (Book));
-        add_1->title = (char *) malloc(sizeof (add->title));
-        add_1->authors = (char *)malloc(sizeof (add->authors));
+        add_1->title = (char *) malloc(150);
+        add_1->authors = (char *)malloc(150);
         add_1->next = NULL;
         while (1){
             add_choice();
@@ -159,42 +161,124 @@ int add_book(Book book){
         switch (addb) {
             case '1':
                 display();
-                printf("\nEnter the title of the book you wish to add:\n");
-                fflush(stdin);
-                gets(t);
-                book.title = (char *) malloc(300 * sizeof (char));
-                strcpy(book.title,t);
+                while(j == 0){
+                    printf("\nEnter the title of the book you wish to add:\n");
+                    fgets(t,50,stdin);
+                    for(i = 0; t[i] != '\n' && i < strlen(t); i++);
+                    if(i == strlen(t)) while(getchar()!='\n');
+                    for(i = 0; i < strlen(t); i ++){
+                        if(t[i] == '\r' || t[i] == '\n'){
+                            t[i] = '\0';
+                            break;
+                        }
+                    }
+                    if(strlen(t) > 40){
+                        printf("\nYour title is too long, please enter title again which should keep under 40 words\n");
+                        continue;
+                    }
+                    //book.title = (char *) malloc(150);
+                    strcpy(book.title,t);
+                    j = 1;
+                }
+                j = 0;
 
-                printf("Enter the author of the book you wish to add:\n");
-                fflush(stdin);
-                gets(t);
-                book.authors = (char *) malloc(300 * sizeof (char));
-                strcpy(book.authors,t);
+                while (j == 0){
+                    printf("Enter the author of the book you wish to add:\n");
+                    fgets(t,50,stdin);
+                    for(i = 0; t[i] != '\n' && i < strlen(t); i++);
+                    if(i == strlen(t)) while(getchar()!='\n');
+                    for(i = 0; i < strlen(t); i ++){
+                        if(t[i] == '\r' || t[i] == '\n'){
+                            t[i] = '\0';
+                            break;
+                        }
+                    }
+                    if(strlen(t) > 40){
+                        printf("\nYour authors are too long, please enter authors again which should keep under 40 words\n");
+                        continue;
+                    }
+                   // book.authors = (char *) malloc(150);
+                    strcpy(book.authors,t);
+                    j = 1;
+                }
+                j = 0;
+//                while (1){
+//                    printf("Enter the year of the book you wish to add:\n");
+//                    fflush(stdin);
+//                    gets(t);
+//                    book.year = atoi(t);
+//                    if(book.year > 0 && book.year <= 2022){
+//                        break;
+//                    } else{
+//                        printf("\nWrong year, please enter year again.\n\n");
+//                        continue;
+//                    }
+//                }
 
                 while (1){
                     printf("Enter the year of the book you wish to add:\n");
                     fflush(stdin);
-                    gets(t);
-                    book.year = atoi(t);
-                    if(book.year > 0 && book.year <= 2022){
+                    fgets(t,50,stdin);
+                    for(i = 0; t[i] != '\n' && i < strlen(t); i++);
+                    if(i == strlen(t)) while(getchar()!='\n');
+                    for(i = 0; i < strlen(t); i ++){
+                        if(t[i] == '\r' || t[i] == '\n'){
+                            t[i] = '\0';
+                            break;
+                        }
+                    }
+                    for (i = 0; i < strlen(t); ++i) {
+                        if(t[i] < '0' || t[i] > '9'){
+                            printf("\nWrong year, please enter year again.\n\n");
+                            i = -1;
+                            break;
+                        }
+                    }
+                    if(i == -1) continue;
+                    a = atoi(t);
+                    if(a > 0 && a <= 2022){
+                        book.year = a;
                         break;
                     } else{
                         printf("\nWrong year, please enter year again.\n\n");
                         continue;
                     }
                 }
-
                 if(repeated(book.title,book.authors,book.year)){
                     printf("\nThis book has already existed, so no new book can be added\n");
                     printf("If you want to add it, please choose option 2.\n");
                     free(add);
                     break;
-                }
+                }//Check the book has existed in the library.
 
-                printf("Enter the copies of the book you wish to add:\n");
-                fflush(stdin);
-                gets(t);
-                book.copies = atoi(t);
+                while(1){
+                    printf("Enter the copies of the book you wish to add:\n");
+                    fflush(stdin);
+                    fgets(t,50,stdin);
+                    for(i = 0; t[i] != '\n' && i < strlen(t); i++);
+                    if(i == strlen(t)) while(getchar()!='\n');
+                    for(i = 0; i < strlen(t); i ++){
+                        if(t[i] == '\r' || t[i] == '\n'){
+                            t[i] = '\0';
+                            break;
+                        }
+                    }
+                    for (i = 0; i < strlen(t); ++i) {
+                        if(t[i] < '0' || t[i] > '9'){
+                            printf("\nWrong copies, please enter copies again which at least more than 1.\n\n");
+                            i = -1;
+                            break;
+                        }
+                    }
+                    if(i == -1) continue;
+                    a = atoi(t);
+                    if(a > 0){
+                        book.copies = a;
+                        break;
+                    } else{
+                        printf("\nWrong copies, please enter copies again which at least more than 1.\n\n");
+                    }
+                }
 
                 strcpy(add->title,book.title);
                 strcpy(add->authors,book.authors);
@@ -220,19 +304,52 @@ int add_book(Book book){
                 display();
                 printf("\nEnter the title of the book you wish to add:\n");
                 fflush(stdin);
-                gets(p);
-                book.title = (char *) malloc(300 * sizeof (char));
+                fgets(p,50,stdin);
+                for(i = 0; p[i] != '\n' && i < strlen(p); i++);
+                if(i == strlen(p)) while(getchar()!='\n');
+                for(i = 0; i < strlen(p); i ++){
+                    if(p[i] == '\r' || p[i] == '\n'){
+                        p[i] = '\0';
+                        break;
+                    }
+                }
+                book.title = (char *) malloc(150);
                 strcpy(book.title,p);
 
                 printf("Enter the author of the book you wish to add:\n");
                 fflush(stdin);
-                gets(p);
-                book.authors = (char *) malloc(300 * sizeof (char));
+                fgets(p,50,stdin);
+                for(i = 0; p[i] != '\n' && i < strlen(p); i++);
+                if(i == strlen(p)) while(getchar()!='\n');
+                for(i = 0; i < strlen(p); i ++){
+                    if(p[i] == '\r' || p[i] == '\n'){
+                        p[i] = '\0';
+                        break;
+                    }
+                }
+                book.authors = (char *) malloc(150);
                 strcpy(book.authors,p);
 
                 printf("Enter the year of the book you wish to add:\n");
                 fflush(stdin);
-                gets(p);
+                fgets(p,50,stdin);
+                for(i = 0; p[i] != '\n' && i < strlen(p); i++);
+                if(i == strlen(p)) while(getchar()!='\n');
+                for(i = 0; i < strlen(p); i ++){
+                    if(p[i] == '\r' || p[i] == '\n'){
+                        p[i] = '\0';
+                        break;
+                    }
+                }
+                for (i = 0; i < strlen(p); ++i) {
+                    if(p[i] < '0' || p[i] > '9'){
+                        printf("This book does not exist in stock.\n");
+                        printf("If you want to add it, please choose option 1,\n");
+                        i = -1;
+                        break;
+                    }
+                }
+                if(i == -1) break;
                 book.year = atoi(p);
 
                 if(repeated(book.title,book.authors,book.year) == NULL){
@@ -242,10 +359,34 @@ int add_book(Book book){
                     break;
                 }
 
-                printf("Enter the copies of the book you wish to add:\n");
-                fflush(stdin);
-                gets(p);
-                book.copies = atoi(p);
+                while(1){
+                    printf("Enter the copies of the book you wish to add:\n");
+                    fflush(stdin);
+                    fgets(p,50,stdin);
+                    for(i = 0; p[i] != '\n' && i < strlen(p); i++);
+                    if(i == strlen(p)) while(getchar()!='\n');
+                    for(i = 0; i < strlen(p); i ++){
+                        if(p[i] == '\r' || p[i] == '\n'){
+                            p[i] = '\0';
+                            break;
+                        }
+                    }
+                    for (i = 0; i < strlen(p); ++i) {
+                        if(p[i] < '0' || p[i] > '9'){
+                            printf("\nWrong copies, please enter copies again which at least more than 1.\n\n");
+                            i = -1;
+                            break;
+                        }
+                    }
+                    if(i == -1) continue;
+                    a = atoi(p);
+                    if(a > 0){
+                        book.copies = a;
+                        break;
+                    } else{
+                        printf("\nWrong copies, please enter copies again which at least more than 1.\n\n");
+                    }
+                }
 
                 strcpy(add_1->title,book.title);
                 strcpy(add_1->authors,book.authors);
@@ -286,7 +427,6 @@ int remove_book(Book book){
         }
         user_borrow = user_borrow ->next;
     }
-
     while (1){
         if(book_remove == NULL || p == NULL){
             printf("\nThe book was not found in the library.\n");
@@ -310,10 +450,9 @@ Librarian *Lib_load(){
     Librarian *q=NULL;
     Librarian *t = q;
     Librarian *p_lib;
-    int i;
+    //int i;
     if((file = fopen("librarian.txt","r"))==NULL){
         file = fopen("librarian.txt","w+");
-        exit(1);
     }
     getc(file);
     if(feof(file)){
@@ -344,7 +483,6 @@ void Lib_Manage(){
     while(lib_1 != '4'){
         while (1){
             lib_choice();
-            printf("Option:");
             int count = 0;
             scanf("%c",&lib_1);
             while(getchar()!='\n') count ++;
@@ -416,18 +554,27 @@ User *exist_user(char *user_id){
 }
 
 void Lib_return(){
+    int i;
     char id[20];
     Book *re;
     User *user_return;
     Lib_Display();
     printf("\nPlease enter the ID of the user you wish forcibly returned books:");
-    gets(id);
+    fgets(id,25,stdin);
+    for(i = 0; id[i] != '\n' && i < strlen(id); i++);
+    if(i == strlen(id)) while(getchar()!='\n');
+    for(i = 0; i < strlen(id); i ++){
+        if(id[i] == '\r' || id[i] == '\n'){
+            id[i] = '\0';
+            break;
+        }
+    }
     user_return = exist_user(id);
     if(!user_return){
         printf("\nSorry,the student does not exist.\n");
         return;
     }
-    int i, cot = 0;
+    int cot = 0;
     for (i = 0; i < 10; i++) {
         if(user_return->user_bor[i] != 0){
             cot++;
@@ -460,8 +607,16 @@ void Lib_delete(){
     int i;
     char id_1[20];
     Lib_Display();
-    printf("\nPlease enter the ID number of the student you wish to deleter:");
-    gets(id_1);
+    printf("\nPlease enter the ID number of the student you wish to delete:");
+    fgets(id_1,30,stdin);
+    for(i = 0; id_1[i] != '\n' && i < strlen(id_1); i++);
+    if(i == strlen(id_1)) while(getchar()!='\n');
+    for(i = 0; i < strlen(id_1); i ++){
+        if(id_1[i] == '\r' || id_1[i] == '\n'){
+            id_1[i] = '\0';
+            break;
+        }
+    }
     user_delete = exist_user(id_1);
     if(!user_delete){
         printf("\nSorry,the student does not exist.\n");

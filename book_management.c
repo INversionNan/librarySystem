@@ -20,8 +20,8 @@ Book *Book_load(){
     while(!feof(file)){
         p=(Book *)malloc(sizeof(Book));
         p->next=NULL;
-        p->title = (char *)malloc(300 * sizeof (char ));
-        p->authors = (char *)malloc(300 * sizeof (char));
+        p->title = (char *)malloc(150);
+        p->authors = (char *)malloc(150);
         fscanf(file,"%d",&p->id);
         fscanf(file,"%s",p->title);
         for(i = 0; i < strlen(p->title); i ++){

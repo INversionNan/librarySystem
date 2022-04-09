@@ -8,7 +8,15 @@ void password_input(char *password){
     int i;
     int length_1 =3;
     while (length_1 < 4 || length_1 > 15){
-        gets(c);
+        fgets(c,18,stdin);
+        for(i = 0; c[i] != '\n' && i < strlen(c); i++);
+        if(i == strlen(c)) while(getchar()!='\n');
+        for(i = 0; i < strlen(c); i ++){
+            if(c[i] == '\r' || c[i] == '\n'){
+                c[i] = '\0';
+                break;
+            }
+        }
         length_1 = strlen(c);
         for (i = 0; i < length_1; i++) {
             password[i] = c[i];
@@ -40,7 +48,7 @@ void password_input(char *password){
 }
 //Check the password input.
 int check(char *password){
-    char password_check[15];
+    char password_check[16];
     char lib_pass[10] = "librarian";
     int check_num = 0;
     int m = 0; // Check the number of inputting password
